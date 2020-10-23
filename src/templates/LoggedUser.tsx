@@ -4,14 +4,16 @@ import { Button } from "../components/atoms/Button";
 import Navbar from "../components/navigation/Navbar";
 import { Route, Switch } from "react-router-dom";
 import Home from "../views/Home";
+import ProfileView from "../views/ProfileView";
 
 const LoggedUser = () => {
   return <>
   <Navbar/>
   <Switch>
-    <Route path="/">
-      <Home/>
-    </Route>
+    <Route exact path="/" component={Home}/>
+    
+    <Route path="/:name" component={ProfileView}/>
+   
   </Switch>
   </>;
 };

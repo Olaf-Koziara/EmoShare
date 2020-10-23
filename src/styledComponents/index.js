@@ -110,12 +110,21 @@ export const StyledNavIcon = styled.img`
   width: 45px;
 `;
 export const StyledProfileImage = styled.img`
-  width: 50px;
+  width: ${({ medium, large }) =>
+    medium ? "100px" : large ? "200px" : "40px"};
+
   border-radius: 200px;
   margin-left: auto;
   margin-right: 20px;
 `;
+
 export const StyledNavEndButton = styled.button`
   margin-left: auto;
   margin-right: 20px;
+`;
+//profile
+export const StyledProfileWrapper = styled.div`
+  width: 800px;
+  height: 900px;
+  border: 1px solid rgba(50, 50, 50, 0.6);
 `;
