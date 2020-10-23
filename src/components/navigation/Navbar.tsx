@@ -7,18 +7,26 @@ import homeIcon from "../../assets/icons/003-house-black-silhouette-without-door
 import firendsIcon from "../../assets/icons/007-friends.png";
 import searchIcon from "../../assets/icons/001-search.png";
 import logoutIcon from "../../assets/icons/009-logout.png";
-const Navbar = () => {
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+type propsType = {user:any}
+const Navbar = ({user}:propsType) => {
     const[profileImage,setProfileImage] = useState<string>();
-    const getImage = ()=>{
-        const pathRef = storage.ref('/photos/pkkZdj.jpg');
+    
+    const getImage = (imageName:string)=>{
+        console.log(imageName)
+
+        const pathRef = storage.ref("/photos/"+imageName);
        
         pathRef.getDownloadURL().then((url)=> {console.log(url); setProfileImage(url)});
         
       
     }
     useEffect(()=>{
-        getImage();
-    },[])
+        if(user.profileImage){
+        getImage(user.profileImage);
+        }
+    },[user])
     return (
         <StyledNavbarWrapper>
             <StyledNavStartWrapper>
@@ -32,12 +40,22 @@ const Navbar = () => {
             <StyledNavEndWrapper>
                 
                 <StyledNavEndButton>
-                <StyledProfileImage src={profileImage} alt="imageProfile"/>
+                    <Link to={{pathname:`/arek`, state:{
+                            user:user
+                        },
+                    }
+                       
+                }>
+                <StyledProfileImage  src={profileImage} alt="imageProfile"/>
+                </Link>
                 </StyledNavEndButton>
             <button onClick={()=>auth.signOut()}><StyledNavIcon src={logoutIcon} alt="logout"/></button>
             </StyledNavEndWrapper>
         </StyledNavbarWrapper>
     )
 }
+const mapStateToProps = (state:any)=>({
+    user:state.user
+})
 
-export default Navbar
+export default connect(mapStateToProps)(Navbar)
