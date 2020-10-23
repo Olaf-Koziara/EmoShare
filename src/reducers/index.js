@@ -9,11 +9,7 @@ const emoShareReducer = (state = initialState, action) => {
     case actionTypes.setUser: {
       return {
         ...state,
-        user: firestore
-          .collection("users")
-          .where("uid", "==", payload)
-          .get()
-          .then((doc) => console.log(doc.data)),
+        user: payload,
       };
     }
     default:
