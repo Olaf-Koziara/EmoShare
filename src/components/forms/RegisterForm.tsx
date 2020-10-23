@@ -16,7 +16,7 @@ const RegisterForm = ({form}:propsType) => {
           const storageRef = storage.ref('photos/'+file.name);
           let task=storageRef.put(file);
           task.on('state_changed',(snapshot)=>{setProgress((snapshot.bytesTransferred/ snapshot.totalBytes)*100)})
-          }}).then(()=>firestore.collection("users").add({email:event.email,uid:auth.currentUser?.uid}))
+          }}).then(()=>firestore.collection("users").add({email:event.email,profileImage:event.file.name, uid:auth.currentUser?.uid}))
         .catch((error) => {
           alert(`${error}`);
         });
