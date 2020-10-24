@@ -3,7 +3,7 @@ import LoginForm from "../components/forms/LoginForm";
 import { StyledLoginPageWrapper,StyledBackgroundImage, StyledLoginPageLogoWrapper } from "../styledComponents";
 import loginLogo from "../assets/loginLogo.png";
 import { Link, Route, Switch } from "react-router-dom";
-import RegisterForm from "../components/forms/RegisterForm";
+import RegisterForm from "../components/forms/RegisterForm.js";
 import { Button } from "../components/atoms/Button";
 const UnloggedUser = () => {
   return (
