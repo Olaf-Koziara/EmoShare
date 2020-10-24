@@ -1,7 +1,7 @@
 import { auth } from "../../firebaseConfig";
 import { Formik } from "formik";
 import React from "react";
-import { StyledField, StyledForm,StyledFormWrapper } from "../../styledComponents";
+import { StyledField, StyledForm,StyledLoginFormWrapper } from "../../styledComponents";
 import { Button } from "../atoms/Button";
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const LoginForm = () => {
   }
   const initialValues = {email:"",password:""};
   return (
-    <StyledFormWrapper mxAuto myAuto>
+    <StyledLoginFormWrapper  mxAuto myAuto>
     <Formik   initialValues={initialValues} onSubmit={(e)=>handleLogin(e)} >
     
       <StyledForm >
@@ -30,7 +30,7 @@ const LoginForm = () => {
         <Link to="/register"> <Button >Register</Button></Link>
       </StyledForm>
     </Formik>
-    </StyledFormWrapper>
+    </StyledLoginFormWrapper  >
   );
 };
 

@@ -20,7 +20,10 @@ export const StyledLoginPageWrapper = styled.div`
   }
 `;
 export const StyledLoginPageLogoWrapper = styled.div`
-  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -100;
 `;
 //Login form
 export const StyledForm = styled(Form)`
@@ -29,6 +32,7 @@ export const StyledForm = styled(Form)`
   flex-direction: column;
   margin: auto;
   margin-top: 5px;
+  z-index: 100;
 `;
 export const StyledField = styled(Field)`
   line-height: 50px;
@@ -43,9 +47,26 @@ export const StyledField = styled(Field)`
 
   transition: all 0.4s ease;
 `;
-export const StyledFormWrapper = styled.div`
+export const StyledLoginFormWrapper = styled.div`
   width: 300px;
   margin: 0 0px;
+
+  ${({ mxAuto }) =>
+    mxAuto &&
+    css`
+      margin-left: auto;
+      margin-right: auto;
+    `}
+  ${({ myAuto }) =>
+    myAuto &&
+    css`
+      margin-top: auto;
+      margin-bottom: auto;
+    `}
+`;
+export const StyledRegisterFormWrapper = styled.div`
+  width: 300px;
+  margin: 300px 0px;
 
   ${({ mxAuto }) =>
     mxAuto &&
@@ -127,4 +148,15 @@ export const StyledProfileWrapper = styled.div`
   width: 800px;
   height: 900px;
   border: 1px solid rgba(50, 50, 50, 0.6);
+  ${({ mxAuto }) =>
+    mxAuto &&
+    css`
+      margin-left: auto;
+      margin-right: auto;
+    `}
+`;
+export const StyledProfileImageWrapper = styled.div`
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 `;
