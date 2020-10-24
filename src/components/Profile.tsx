@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { storage } from '../firebaseConfig'
-import { StyledProfileImage, StyledProfileWrapper } from '../styledComponents'
+import { StyledProfileImage, StyledProfileImageWrapper, StyledProfileWrapper } from '../styledComponents'
 type propsType = {user:any}
 const Profile = ({user}:propsType) => {
     const[profileImage,setProfileImage] = useState<string>();
@@ -18,7 +18,9 @@ const Profile = ({user}:propsType) => {
     
     return (
         <StyledProfileWrapper>
-           <StyledProfileImage src={profileImage}  large />
+            <StyledProfileImageWrapper>
+           <StyledProfileImage mxAuto src={profileImage}  large />
+           </StyledProfileImageWrapper>
         </StyledProfileWrapper>
     )
 }
