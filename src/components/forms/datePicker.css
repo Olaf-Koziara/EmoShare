@@ -1,0 +1,14 @@
+.react-datepicker__input-container > input {
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  margin-bottom: 5px;
+  border-radius: 5px;
+  padding: 0 20px;
+  font-size: 16px;
+}
+.react-datepicker-ignore-onclickoutside {
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  margin-bottom: 5px;
+  border-radius: 5px;
+  padding: 0 20px;
+  font-size: 16px;
+}
