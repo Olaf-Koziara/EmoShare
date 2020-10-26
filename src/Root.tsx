@@ -31,10 +31,11 @@ const Root = ({setUser}:propsType) => {
     })
     
   },[currentUser])
+  
   return (
     <Provider store={store}>
     <BrowserRouter>
-      {currentUser ? <LoggedUser /> : <UnloggedUser />}
+      {currentUser ? <LoggedUser /> : <UnloggedUser />}-
      
     </BrowserRouter>
     </Provider>
