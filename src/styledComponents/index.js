@@ -49,7 +49,7 @@ export const StyledField = styled(Field)`
 `;
 export const StyledLoginFormWrapper = styled.div`
   width: 300px;
-  margin: 0 0px;
+  margin: 500px 0px;
 
   ${({ mxAuto }) =>
     mxAuto &&
@@ -96,11 +96,24 @@ export const StyledmxAutoWrapper = styled.div`
   margin-right: auto;
 `;
 //Register form
-export const StyledProgressBar = styled.div`
-  height: 10px;
-  background-color: red;
-  margin: auto;
-  width: ${({ progress }) => progress};
+export const StyledPhotoSelect = styled.div`
+  width: 100px;
+  height: 25px;
+
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+    0px 2px 3px 0px rgba(0, 0, 0, 0.4);
+  padding: 5px;
+  text-align: center;
+  font-weight: 500;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  &:hover {
+    box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.6);
+  }
+  color: rgba(40, 40, 40, 0.4);
+  margin: 20px 5px;
 `;
 //Navigation
 export const StyledNavbarWrapper = styled.div`
@@ -159,4 +172,5 @@ export const StyledProfileImageWrapper = styled.div`
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 200px;
 `;
