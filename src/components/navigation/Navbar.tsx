@@ -34,14 +34,14 @@ const Navbar = ({user}:propsType) => {
                 <Input   />
             </StyledNavStartWrapper>
             <StyledNavMidtWrapper>
-               <button> <StyledNavIcon src={homeIcon} alt="home"/></button>
+                <Link to="/"><StyledNavIcon src={homeIcon} alt="home"/></Link>
                <button><StyledNavIcon src={firendsIcon} alt="friends"/></button>
             </StyledNavMidtWrapper>
             <StyledNavEndWrapper>
                 
                 <StyledNavEndButton>
-                    <Link to={{pathname:`/arek`, state:{
-                            user:user
+                    <Link to={{pathname:`/${user.name}`, state:{
+                            email:user.email
                         },
                     }
                        
@@ -49,7 +49,7 @@ const Navbar = ({user}:propsType) => {
                 <StyledProfileImage  src={profileImage} alt="imageProfile"/>
                 </Link>
                 </StyledNavEndButton>
-            <button onClick={()=>auth.signOut()}><StyledNavIcon src={logoutIcon} alt="logout"/></button>
+                <Link to="/"> <button onClick={()=>auth.signOut()}><StyledNavIcon src={logoutIcon} alt="logout"/></button></Link>
             </StyledNavEndWrapper>
         </StyledNavbarWrapper>
     )
