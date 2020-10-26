@@ -5,7 +5,7 @@ import {
   StyledField,
   StyledForm,
   StyledRegisterFormWrapper,
-  StyledProgressBar,
+  StyledPhotoSelect,
 } from "../../styledComponents";
 import { Button } from "../atoms/Button";
 import DatePicker from "react-datepicker";
@@ -16,13 +16,17 @@ import "./datePicker.css";
 
 const RegisterForm = () => {
   const [progress, setProgress] = useState(0);
+
+  const now = new Date();
+  const [birthDate, setBirthDate] = useState(now);
+
   const handleRegister = (event) => {
     console.log(event);
     auth
       .createUserWithEmailAndPassword(event.email, event.password)
       .then(() => {
-        const file = event.file;
-        if (file) {
+        if (event.file) {
+          const file = event.file;
           const storageRef = storage.ref("photos/" + file.name);
           let task = storageRef.put(file);
           task.on("state_changed", (snapshot) => {
@@ -34,8 +38,11 @@ const RegisterForm = () => {
       })
       .then(() =>
         firestore.collection("users").add({
+          name: event.name,
+          surname: event.surname,
+          birthDate: birthDate.toString(),
           email: event.email,
-          profileImage: event.file.name,
+          profileImage: event.file ? event.file.name : null,
           uid: auth.currentUser?.uid,
         }),
       )
@@ -43,8 +50,6 @@ const RegisterForm = () => {
         alert(`${error}`);
       });
   };
-
-  const now = new Date();
   return (
     <StyledRegisterFormWrapper mxAuto>
       <Formik
@@ -55,9 +60,8 @@ const RegisterForm = () => {
       >
         {(formProps) => (
           <StyledForm>
-            <StyledProgressBar progress={progress} />
             <label htmlFor="file">
-              <div>Select</div>
+              <StyledPhotoSelect>Select photo</StyledPhotoSelect>
             </label>
             <input
               style={{ display: "none" }}
@@ -69,16 +73,15 @@ const RegisterForm = () => {
                 formProps.setFieldValue("file", event.target.files[0]);
               }}
             />
-            <img src={formProps.values.file.f}
 
             <StyledField placeholder="Name" name="name" />
             <StyledField placeholder="Surname" name="surname" />
             <label htmlFor="dateBirth">Birth date:</label>
             <DatePicker
-              selected={now}
               onChange={(date) => {
-                console.log(date);
+                setBirthDate(date);
               }}
+              selected={birthDate}
               showYearDropdown
               dateFormatCalendar="MMMM"
               yearDropdownItemNumber={100}
