@@ -17,10 +17,11 @@ const Profile = ({user}:propsType) => {
     useEffect(()=>{getImage(user.profileImage)},[])
     
     return (
-        <StyledProfileWrapper>
+        <StyledProfileWrapper mxAuto>
             <StyledProfileImageWrapper>
            <StyledProfileImage mxAuto src={profileImage}  large />
            </StyledProfileImageWrapper>
+           <div>{user.name}</div>
         </StyledProfileWrapper>
     )
 }
