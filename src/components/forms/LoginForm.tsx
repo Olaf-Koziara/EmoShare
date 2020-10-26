@@ -20,7 +20,7 @@ const LoginForm = () => {
   }
   const initialValues = {email:"",password:""};
   return (
-    <StyledLoginFormWrapper  mxAuto myAuto>
+    <StyledLoginFormWrapper  mxAuto >
     <Formik   initialValues={initialValues} onSubmit={(e)=>handleLogin(e)} >
     
       <StyledForm >
