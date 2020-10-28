@@ -1,5 +1,7 @@
 body {
   height: 100%;
+  background-color: #262b30;
+  color: white;
 }
 * {
   margin: 0;
@@ -11,7 +13,7 @@ code {
 }
 a {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 button {
   border: 0;
