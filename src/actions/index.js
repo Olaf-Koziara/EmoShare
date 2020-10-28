@@ -4,3 +4,7 @@ export const setUserAction = (uid) => ({
   type: actionTypes.setUser,
   payload: uid,
 });
+export const setUserImageAction = (image) => ({
+  type: actionTypes.setUserImage,
+  payload: image,
+});
