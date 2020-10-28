@@ -119,7 +119,7 @@ export const StyledPhotoSelect = styled.div`
 export const StyledNavbarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  position: fixed;
+  position: sticky;
   width: 100%;
   background-color: #353d43;
 `;
@@ -146,10 +146,12 @@ export const StyledNavIcon = styled.img`
 export const StyledProfileImage = styled.img`
   width: ${({ medium, large }) =>
     medium ? "100px" : large ? "200px" : "40px"};
+  min-height: ${({ medium, large }) =>
+    medium ? "100px" : large ? "200px" : "40px"};
 
-  border-radius: 200px;
   margin-left: auto;
   margin-right: 20px;
+  border: 1px solid rgba(100, 100, 100, 0.8);
 `;
 
 export const StyledNavEndButton = styled.button`
@@ -173,4 +175,24 @@ export const StyledProfileImageWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-top: 200px;
+`;
+export const StyledProfileTextWrapper = styled.div`
+  width: 70%;
+  height: 400px;
+  margin: auto;
+  box-shadow: inset 1px 1px 3px 2px #353d43;
+  font-size: 22px;
+  padding: 30px;
+`;
+export const StledProfileTextParagraph = styled.p`
+  margin: 10px;
+`;
+//home
+export const StyledPostCreatorWrapper = styled.div`
+  background-color: #3e4750;
+  border-radius: 5px;
+  width: 500px;
+  height: 120px;
+  margin: 30px auto;
+  padding: 20px;
 `;
