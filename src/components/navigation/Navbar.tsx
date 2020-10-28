@@ -9,8 +9,10 @@ import searchIcon from "../../assets/icons/001-search.png";
 import logoutIcon from "../../assets/icons/009-logout.png";
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-type propsType = {user:any}
-const Navbar = ({user}:propsType) => {
+import ProfileImage from '../ProfileImage'
+import { setUserImageAction } from '../../actions'
+type propsType = {user:any,setImage:any}
+const Navbar = ({user,setImage}:propsType) => {
     const[profileImage,setProfileImage] = useState<string>();
     
     const getImage = (imageName:string)=>{
@@ -18,7 +20,7 @@ const Navbar = ({user}:propsType) => {
 
         const pathRef = storage.ref("/photos/"+imageName);
        
-        pathRef.getDownloadURL().then((url)=> {console.log(url); setProfileImage(url)});
+        pathRef.getDownloadURL().then((url)=> {console.log(url); setProfileImage(url);setImage(url)});
         
       
     }
@@ -40,14 +42,7 @@ const Navbar = ({user}:propsType) => {
             <StyledNavEndWrapper>
                 
                 <StyledNavEndButton>
-                    <Link to={{pathname:`/${user.name}`, state:{
-                            email:user.email
-                        },
-                    }
-                       
-                }>
-                <StyledProfileImage  src={profileImage} alt="imageProfile"/>
-                </Link>
+                    <ProfileImage name={user.name} surname={user.surname} email={user.email} imageUrl={profileImage} />
                 </StyledNavEndButton>
                 <Link to="/"> <button onClick={()=>auth.signOut()}><StyledNavIcon src={logoutIcon} alt="logout"/></button></Link>
             </StyledNavEndWrapper>
@@ -57,5 +52,8 @@ const Navbar = ({user}:propsType) => {
 const mapStateToProps = (state:any)=>({
     user:state.user
 })
+const mapDispatchToProps = (dispatch:any)=>({
+    setImage:(image:any)=>dispatch(setUserImageAction(image))
+})
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps,mapDispatchToProps)(Navbar)
