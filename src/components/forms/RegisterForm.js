@@ -21,7 +21,6 @@ const RegisterForm = () => {
   const [birthDate, setBirthDate] = useState(now);
 
   const handleRegister = (event) => {
-    console.log(event);
     auth
       .createUserWithEmailAndPassword(event.email, event.password)
       .then(() => {
@@ -36,7 +35,7 @@ const RegisterForm = () => {
           });
         }
       })
-      .then(() =>
+      .then(() => {
         firestore.collection("users").add({
           name: event.name,
           surname: event.surname,
@@ -44,8 +43,9 @@ const RegisterForm = () => {
           email: event.email,
           profileImage: event.file ? event.file.name : null,
           uid: auth.currentUser?.uid,
-        }),
-      )
+        });
+        document.location.href = "/";
+      })
       .catch((error) => {
         alert(`${error}`);
       });
