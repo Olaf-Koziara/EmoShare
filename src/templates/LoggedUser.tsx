@@ -12,7 +12,7 @@ const LoggedUser = () => {
   <Switch>
     <Route exact path="/" component={Home}/>
     
-    <Route  path="/:name" component={ProfileView}/>
+    <Route  path="/users/:name" component={ProfileView}/>
    
   </Switch>
   </>;
