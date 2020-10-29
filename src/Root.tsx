@@ -6,22 +6,31 @@ import LoggedUser from "./templates/LoggedUser";
 import UnloggedUser from "./templates/UnloggedUser";
 import  {Provider,connect} from "react-redux"
 import { store } from "./store";
-import{setUserAction} from "./actions"
+import{setPostsAction, setUserAction} from "./actions"
 
-type propsType = {setUser:any}
-const Root = ({setUser}:propsType) => {
+type propsType = {setUser:any,setPosts:any}
+const Root = ({setUser,setPosts}:propsType) => {
   const [currentUser, setCurrentUser] = useState(null);
-  
+
   useEffect(()=>{
     auth.onAuthStateChanged((user:any)=>{
     
       if(user){
         setCurrentUser(user.uid)
-        const data = firestore.collection("users").where("uid","==",user.uid)
-        data.onSnapshot((snapshot)=>{
+        const users = firestore.collection("users").where("uid","==",user.uid)
+        users.onSnapshot((snapshot)=>{
           const user = snapshot.docs.map((doc)=>({...doc.data()}))
+          console.log(user)
             setUser(user[0])
         })
+        const postsData= firestore.collection('posts').orderBy("date");
+        postsData.onSnapshot((snapshot) => {
+          const posts= snapshot.docs.map((doc) => ({ ...doc.data()}));
+          setPosts(posts.reverse(
+            
+          ))
+        });
+        
                 
         
       }else{
@@ -30,7 +39,7 @@ const Root = ({setUser}:propsType) => {
       }
     })
     
-  },[currentUser])
+  },[])
   
   return (
     <Provider store={store}>
@@ -42,6 +51,7 @@ const Root = ({setUser}:propsType) => {
   );
 };
 const mapDispatchToProps = (dispatch:any)=>({
-  setUser:(uid:String)=>dispatch(setUserAction(uid))
+  setUser:(user:any)=>dispatch(setUserAction(user)),
+  setPosts:(posts:any)=>dispatch(setPostsAction(posts))
 })
 export default connect (null,mapDispatchToProps)(Root);
