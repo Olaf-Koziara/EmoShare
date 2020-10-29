@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { auth, storage } from '../../firebaseConfig'
+import { auth, firestore, storage } from '../../firebaseConfig'
 import { StyledNavbarWrapper, StyledNavEndButton, StyledNavEndWrapper, StyledNavIcon, StyledNavMidtWrapper, StyledNavStartWrapper, StyledProfileImage } from '../../styledComponents'
 import { Button } from '../atoms/Button'
 import { Input } from '../atoms/Input'
@@ -11,23 +11,19 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import ProfileImage from '../ProfileImage'
 import { setUserImageAction } from '../../actions'
-type propsType = {user:any,setImage:any}
-const Navbar = ({user,setImage}:propsType) => {
-    const[profileImage,setProfileImage] = useState<string>();
-    
-    const getImage = (imageName:string)=>{
-        console.log(imageName)
 
-        const pathRef = storage.ref("/photos/"+imageName);
-       
-        pathRef.getDownloadURL().then((url)=> {console.log(url); setProfileImage(url);setImage(url)});
-        
-      
-    }
+type propsType = {user:any,setImage:any,profileImage:string}
+const Navbar = ({user,setImage,profileImage}:propsType) => {
+   
+    
+    
     useEffect(()=>{
         if(user.profileImage){
-        getImage(user.profileImage);
+        const pathRef = storage.ref("/photos/"+user.profileImage);
+       
+        pathRef.getDownloadURL().then((url)=> {setImage(url)})
         }
+        
     },[user])
     return (
         <StyledNavbarWrapper>
@@ -37,20 +33,25 @@ const Navbar = ({user,setImage}:propsType) => {
             </StyledNavStartWrapper>
             <StyledNavMidtWrapper>
                 <Link to="/"><StyledNavIcon src={homeIcon} alt="home"/></Link>
-               <button><StyledNavIcon src={firendsIcon} alt="friends"/></button>
+               <button onClick={()=>firestore.collection("posts").add({
+content :"Klony są swietne",
+email: "olaf.koziara@gmail.com",
+name: "Olaf",
+surname: "Koziara" })} ><StyledNavIcon src={firendsIcon} alt="friends"/></button>
             </StyledNavMidtWrapper>
-            <StyledNavEndWrapper>
+           { user?<StyledNavEndWrapper>
                 
                 <StyledNavEndButton>
                     <ProfileImage name={user.name} surname={user.surname} email={user.email} imageUrl={profileImage} />
                 </StyledNavEndButton>
                 <Link to="/"> <button onClick={()=>auth.signOut()}><StyledNavIcon src={logoutIcon} alt="logout"/></button></Link>
-            </StyledNavEndWrapper>
+            </StyledNavEndWrapper>:"null"}
         </StyledNavbarWrapper>
     )
 }
 const mapStateToProps = (state:any)=>({
-    user:state.user
+    user:state.user,
+    profileImage:state.userImage
 })
 const mapDispatchToProps = (dispatch:any)=>({
     setImage:(image:any)=>dispatch(setUserImageAction(image))
