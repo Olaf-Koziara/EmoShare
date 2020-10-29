@@ -191,8 +191,15 @@ export const StledProfileTextParagraph = styled.p`
 export const StyledPostCreatorWrapper = styled.div`
   background-color: #3e4750;
   border-radius: 5px;
-  width: 500px;
+  width: 400px;
   height: 120px;
   margin: 30px auto;
   padding: 20px;
+  display: grid;
+  grid-template-columns: 65% 35%;
+`;
+export const StyledPostCreatorIcon = styled.img`
+  width: 48px;
+  margin: 10px 20px;
+  padding: 10px 0;
 `;
