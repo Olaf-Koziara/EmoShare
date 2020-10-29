@@ -13,13 +13,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import "./datePicker.css";
+import { connect } from "react-redux";
+import { setUserAction } from "../../actions";
+import { Link } from "react-router-dom";
+import ImageUploader from "../ImageUploader";
 
-const RegisterForm = () => {
-  const [progress, setProgress] = useState(0);
-
+const RegisterForm = ({ setUser }) => {
   const now = new Date();
   const [birthDate, setBirthDate] = useState(now);
-
   const handleRegister = (event) => {
     auth
       .createUserWithEmailAndPassword(event.email, event.password)
@@ -28,26 +29,34 @@ const RegisterForm = () => {
           const file = event.file;
           const storageRef = storage.ref("photos/" + file.name);
           let task = storageRef.put(file);
-          task.on("state_changed", (snapshot) => {
-            setProgress(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-            );
-          });
+          task.on("state_changed", (snapshot) => {});
         }
       })
+
       .then(() => {
-        firestore.collection("users").add({
-          name: event.name,
-          surname: event.surname,
+        const user = {
           birthDate: birthDate.toString(),
           email: event.email,
+          name: event.name,
           profileImage: event.file ? event.file.name : null,
+          surname: event.surname,
+
+          uid: auth.currentUser?.uid,
+        };
+        console.log(user);
+        firestore.collection("users").add(user);
+        setUser({
+          birthDate: birthDate.toString(),
+          email: event.email,
+          name: event.name,
+          profileImage: event.file ? event.file.name : null,
+          surname: event.surname,
+
           uid: auth.currentUser?.uid,
         });
-        document.location.href = "/";
-      })
-      .catch((error) => {
-        alert(`${error}`);
+        // setTimeout(() => {
+        //   document.location.href = "/";
+        // }, 1500);
       });
   };
   return (
@@ -60,20 +69,11 @@ const RegisterForm = () => {
       >
         {(formProps) => (
           <StyledForm>
-            <label htmlFor="file">
-              <StyledPhotoSelect>Select photo</StyledPhotoSelect>
-            </label>
-            <input
-              style={{ display: "none" }}
-              placeholder="file"
-              id="file"
-              name="file"
-              type="file"
-              onChange={(event) => {
-                formProps.setFieldValue("file", event.target.files[0]);
+            <ImageUploader
+              setField={(file) => {
+                formProps.setFieldValue("file", file);
               }}
             />
-
             <StyledField placeholder="Name" name="name" />
             <StyledField placeholder="Surname" name="surname" />
             <label htmlFor="dateBirth">Birth date:</label>
@@ -95,6 +95,7 @@ const RegisterForm = () => {
               name="password"
               type="password"
             />
+
             <Button type="submit">Register</Button>
           </StyledForm>
         )}
@@ -102,5 +103,8 @@ const RegisterForm = () => {
     </StyledRegisterFormWrapper>
   );
 };
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (user) => dispatch(setUserAction(user)),
+});
 
-export default RegisterForm;
+export default connect(null, mapDispatchToProps)(RegisterForm);
