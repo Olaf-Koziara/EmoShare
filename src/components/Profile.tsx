@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { storage } from '../firebaseConfig'
-import { StyledProfileImage, StyledProfileImageWrapper, StyledProfileWrapper } from '../styledComponents'
+import { StledProfileTextParagraph, StyledProfileImage, StyledProfileImageWrapper, StyledProfileTextWrapper, StyledProfileWrapper } from '../styledComponents'
 type propsType = {user:any}
 const Profile = ({user}:propsType) => {
     const[profileImage,setProfileImage] = useState<string>();
@@ -15,13 +15,14 @@ const Profile = ({user}:propsType) => {
       
     }
     useEffect(()=>{getImage(user.profileImage)},[])
+    const birthDate = new Date(user.birthDate);
     
     return (
         <StyledProfileWrapper mxAuto>
             <StyledProfileImageWrapper>
            <StyledProfileImage mxAuto src={profileImage}  large />
            </StyledProfileImageWrapper>
-           <div>{user.name}</div>
+           <StyledProfileTextWrapper><StledProfileTextParagraph>Name:{user.name}</StledProfileTextParagraph><StledProfileTextParagraph>Surname:{user.surname}</StledProfileTextParagraph><StledProfileTextParagraph>BirthDate:{`${birthDate.getDate()}-${birthDate.getMonth()+1}-${birthDate.getFullYear()}`}</StledProfileTextParagraph></StyledProfileTextWrapper>
         </StyledProfileWrapper>
     )
 }
