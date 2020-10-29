@@ -8,3 +8,7 @@ export const setUserImageAction = (image) => ({
   type: actionTypes.setUserImage,
   payload: image,
 });
+export const setPostsAction = (posts) => ({
+  type: actionTypes.setPosts,
+  payload: posts,
+});
