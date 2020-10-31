@@ -33,11 +33,7 @@ const Navbar = ({user,setImage,profileImage}:propsType) => {
             </StyledNavStartWrapper>
             <StyledNavMidtWrapper>
                 <Link to="/"><StyledNavIcon src={homeIcon} alt="home"/></Link>
-               <button onClick={()=>firestore.collection("posts").add({
-content :"Klony są swietne",
-email: "olaf.koziara@gmail.com",
-name: "Olaf",
-surname: "Koziara" })} ><StyledNavIcon src={firendsIcon} alt="friends"/></button>
+              <StyledNavIcon src={firendsIcon} alt="friends"/>
             </StyledNavMidtWrapper>
            { user?<StyledNavEndWrapper>
                 
