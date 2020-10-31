@@ -5,6 +5,7 @@ const initialState = {
   user: {},
   userImage: userImage,
   posts: [],
+  profileImagesUrl: [],
 };
 const emoShareReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -25,6 +26,13 @@ const emoShareReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: payload,
+      };
+    }
+    case actionTypes.addImageUrl: {
+      console.log(payload);
+      return {
+        ...state,
+        profileImagesUrl: [...state.profileImagesUrl, payload],
       };
     }
     default:
