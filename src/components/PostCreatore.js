@@ -25,6 +25,7 @@ const PostCreatore = ({ userImage, user }) => {
       name: user.name,
       surname: user.surname,
       date: new Date().toString(),
+      imageName: user.profileImage,
     });
   };
   const [postContent, SetPostContent] = useState("");
