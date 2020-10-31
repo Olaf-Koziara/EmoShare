@@ -203,3 +203,18 @@ export const StyledPostCreatorIcon = styled.img`
   margin: 10px 20px;
   padding: 10px 0;
 `;
+export const StyledPostsList = styled.ul`
+  width: 40%;
+  margin: auto;
+  list-style: none;
+`;
+export const StyledPostWrapper = styled.li`
+  background-color: #3e4750;
+  margin: 10px;
+
+  padding: 40px;
+  border-radius: 4px;
+`;
+export const StyledPostParagraph = styled.p`
+  margin: 10px;
+`;
