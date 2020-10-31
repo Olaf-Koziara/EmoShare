@@ -12,3 +12,7 @@ export const setPostsAction = (posts) => ({
   type: actionTypes.setPosts,
   payload: posts,
 });
+export const addImageUrlAction = (url) => ({
+  type: actionTypes.addImageUrl,
+  payload: url,
+});
