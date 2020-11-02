@@ -115,6 +115,11 @@ export const StyledPhotoSelect = styled.div`
   color: rgba(40, 40, 40, 0.4);
   margin: 20px 5px;
 `;
+export const StyledCropperWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 400px;
+`;
 //Navigation
 export const StyledNavbarWrapper = styled.div`
   display: flex;
