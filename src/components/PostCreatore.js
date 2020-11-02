@@ -34,7 +34,12 @@ const PostCreatore = ({ userImage, user }) => {
     <>
       <StyledPostCreatorWrapper>
         <div>
-          <ProfileImage imageUrl={userImage} />
+          <ProfileImage
+            surname={user.surname}
+            name={user.name}
+            email={user.email}
+            imageUrl={userImage}
+          />
           <Input
             type="text"
             placeholder={`
