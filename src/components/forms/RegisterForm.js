@@ -17,28 +17,34 @@ import { connect } from "react-redux";
 import { setUserAction } from "../../actions";
 import { Link } from "react-router-dom";
 import ImageUploader from "../ImageUploader";
+import ImageCropper from "../ImageCropper";
 
 const RegisterForm = ({ setUser }) => {
   const now = new Date();
   const [birthDate, setBirthDate] = useState(now);
+  const [blob, setBlob] = useState();
+  const handleSubmitImage = (e, blob) => {
+    // upload blob to firebase 'images' folder with filename 'image'
+    console.log(blob);
+
+    storage
+      .ref("photos")
+      .child(e.email)
+      .put(blob, { contentType: blob.type })
+      .then(() => {
+        document.location.href = "/";
+      });
+  };
   const handleRegister = (event) => {
     auth
       .createUserWithEmailAndPassword(event.email, event.password)
-      .then(() => {
-        if (event.file) {
-          const file = event.file;
-          const storageRef = storage.ref("photos/" + file.name);
-          let task = storageRef.put(file);
-          task.on("state_changed", (snapshot) => {});
-        }
-      })
 
       .then(() => {
         const user = {
           birthDate: birthDate.toString(),
           email: event.email,
           name: event.name,
-          profileImage: event.file ? event.file.name : null,
+          profileImage: event.file ? event.file.name : event.email,
           surname: event.surname,
 
           uid: auth.currentUser?.uid,
@@ -49,14 +55,18 @@ const RegisterForm = ({ setUser }) => {
           birthDate: birthDate.toString(),
           email: event.email,
           name: event.name,
-          profileImage: event.file ? event.file.name : null,
+          profileImage: event.file ? event.file.name : event.email,
           surname: event.surname,
 
           uid: auth.currentUser?.uid,
         });
-        // setTimeout(() => {
-        //   document.location.href = "/";
-        // }, 1500);
+        setTimeout(() => {
+          document.location.href = "/";
+        }, 1500);
+      })
+      .then(() => {
+        console.log(event);
+        handleSubmitImage(event, blob);
       });
   };
   return (
@@ -69,11 +79,7 @@ const RegisterForm = ({ setUser }) => {
       >
         {(formProps) => (
           <StyledForm>
-            <ImageUploader
-              setField={(file) => {
-                formProps.setFieldValue("file", file);
-              }}
-            />
+            <ImageCropper setCroped={setBlob} />
             <StyledField placeholder="Name" name="name" />
             <StyledField placeholder="Surname" name="surname" />
             <label htmlFor="dateBirth">Birth date:</label>
