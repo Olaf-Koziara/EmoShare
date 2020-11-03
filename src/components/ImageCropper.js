@@ -17,6 +17,7 @@ const ImageCropper = ({ setCroped }) => {
   };
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
+    showCroppedImage();
   }, []);
 
   const showCroppedImage = useCallback(async () => {
