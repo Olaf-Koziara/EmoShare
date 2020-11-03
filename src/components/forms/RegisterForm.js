@@ -16,7 +16,7 @@ import "./datePicker.css";
 import { connect } from "react-redux";
 import { setUserAction } from "../../actions";
 import { Link } from "react-router-dom";
-import ImageUploader from "../ImageUploader";
+
 import ImageCropper from "../ImageCropper";
 
 const RegisterForm = ({ setUser }) => {
@@ -46,20 +46,12 @@ const RegisterForm = ({ setUser }) => {
           name: event.name,
           profileImage: event.file ? event.file.name : event.email,
           surname: event.surname,
-
+          follows: [event.email],
           uid: auth.currentUser?.uid,
         };
         console.log(user);
         firestore.collection("users").add(user);
-        setUser({
-          birthDate: birthDate.toString(),
-          email: event.email,
-          name: event.name,
-          profileImage: event.file ? event.file.name : event.email,
-          surname: event.surname,
-
-          uid: auth.currentUser?.uid,
-        });
+        setUser(user);
         setTimeout(() => {
           document.location.href = "/";
         }, 1500);
