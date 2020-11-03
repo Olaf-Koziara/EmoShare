@@ -1,4 +1,5 @@
 import { Field, Form } from "formik";
+import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import LoginPageBack from "../assets/socialBack.jpg";
 //Login page
@@ -66,7 +67,7 @@ export const StyledLoginFormWrapper = styled.div`
 `;
 export const StyledRegisterFormWrapper = styled.div`
   width: 300px;
-  margin: 300px 0px;
+  margin: 200px 0px;
 
   ${({ mxAuto }) =>
     mxAuto &&
@@ -86,7 +87,6 @@ export const StyledBackgroundImage = styled.div`
   filter: blur(10px);
   height: 100%;
 
-  /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -147,6 +147,7 @@ export const StyledNavEndWrapper = styled.div`
 export const StyledNavIcon = styled.img`
   filter: invert(75%);
   width: 45px;
+  margin: auto 0;
 `;
 export const StyledProfileImage = styled.img`
   width: ${({ medium, large }) =>
@@ -162,6 +163,16 @@ export const StyledProfileImage = styled.img`
 export const StyledNavEndButton = styled.button`
   margin-left: auto;
   margin-right: 20px;
+`;
+export const StyledNavSearchWrapper = styled.div`
+  width: 200px;
+  position: relative;
+`;
+export const StyledSearchList = styled.ul`
+  position: absolute;
+  width: 190px;
+  height: 100%;
+  background-color: rgba(50, 50, 50, 0.6);
 `;
 //profile
 export const StyledProfileWrapper = styled.div`
@@ -201,7 +212,7 @@ export const StyledPostCreatorWrapper = styled.div`
   margin: 30px auto;
   padding: 20px;
   display: grid;
-  grid-template-columns: 65% 35%;
+  grid-template-columns: 75% 25%;
 `;
 export const StyledPostCreatorIcon = styled.img`
   width: 48px;
@@ -222,4 +233,7 @@ export const StyledPostWrapper = styled.li`
 `;
 export const StyledPostParagraph = styled.p`
   margin: 10px;
+`;
+export const StyledNavLink = styled(NavLink)`
+  margin-top: 8px;
 `;
