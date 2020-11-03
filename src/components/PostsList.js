@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { firestore } from "../firebaseConfig";
 import { StyledPostsList } from "../styledComponents";
 import PostListItem from "./PostListItem";
 
-const PostsList = ({ posts, user, images }) => {
-  const _postsRender = posts.map((post) => {
+const PostsList = ({ user, images }) => {
+  const selectedPosts = useSelector((state) => state.posts);
+
+  const _postsRender = selectedPosts.map((post) => {
     const url = images.find((image) => image.name === post.imageName);
     console.log(url);
+
     if (url) {
       return (
         <PostListItem
@@ -21,7 +24,7 @@ const PostsList = ({ posts, user, images }) => {
   return <StyledPostsList>{images ? _postsRender : null}</StyledPostsList>;
 };
 const mapStateToProps = (state) => ({
-  posts: state.posts,
+  // posts: state.posts,
   user: state.user,
   images: state.profileImagesUrl,
 });
