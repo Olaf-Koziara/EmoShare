@@ -1,3 +1,4 @@
+import { firestore } from "../firebaseConfig";
 import { actionTypes } from "./actionTypes";
 
 export const setUserAction = (uid) => ({
@@ -16,3 +17,6 @@ export const addImageUrlAction = (url) => ({
   type: actionTypes.addImageUrl,
   payload: url,
 });
+export const setActiveUsersAction = (value) => {
+  return { type: actionTypes.setActiveUsers, payload: value };
+};
