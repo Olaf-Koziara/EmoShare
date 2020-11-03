@@ -10,6 +10,8 @@ import { setPostsAction, setUserAction, addImageUrlAction } from "./actions";
 
 const Root = ({ setUser, setPosts, posts, addImageUrl }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [userFollows, setUserFollows] = useState();
+  const [imagesNames, setImagesNames] = useState([  ]);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -19,28 +21,36 @@ const Root = ({ setUser, setPosts, posts, addImageUrl }) => {
           .collection("users")
           .where("uid", "==", user.uid);
         users.onSnapshot((snapshot) => {
-          const user = snapshot.docs.map((doc) => ({ ...doc.data() }));
+          const user = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
           console.log(user);
           setUser(user[0]);
-        });
-        const postsData = firestore.collection("posts").orderBy("date");
 
-        postsData.onSnapshot((snapshot) => {
-          const posts = snapshot.docs.map((doc) => ({ ...doc.data() }));
-          const tempImagesNames = posts.map((post) => post.imageName);
-          const imageNamesSet = new Set(tempImagesNames);
-          const imageNames = Array.from(imageNamesSet);
-          console.log(imageNames);
-          imageNames.map((name) => {
-            const pathRef = storage.ref("/photos/" + name);
+          if (user[0].follows.length > 0) {
+            const postsData = firestore
+              .collection("posts")
+              .where("email", "in", user[0].follows);
+            postsData.onSnapshot((snapshot) => {
+              const posts = snapshot.docs.map((post) => {
+                const imageName = post.data().imageName;
+                if (!imagesNames.includes(imageName)) {
+                  setImagesNames(imageName);
+                  const pathRef = storage.ref("/photos/" + imageName);
 
-            pathRef.getDownloadURL().then((url) => {
-              console.log(url);
-              addImageUrl({ name: name, url: url });
+                  pathRef.getDownloadURL().then((url) => {
+                    console.log(url);
+                    addImageUrl({ name: imageName, url: url });
+                  });
+                }
+                return {
+                  ...post.data(),
+                };
+              });
+              setPosts(posts);
             });
-          });
-
-          setPosts(posts.reverse());
+          }
         });
       } else {
         setCurrentUser(null);
@@ -58,6 +68,7 @@ const Root = ({ setUser, setPosts, posts, addImageUrl }) => {
 };
 const mapStateToProps = (state) => ({
   posts: state.posts,
+  userFollows: state.user.follows,
 });
 const mapDispatchToProps = (dispatch) => ({
   setUser: (user) => dispatch(setUserAction(user)),
