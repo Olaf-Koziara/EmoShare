@@ -6,6 +6,7 @@ export const Input = styled.input`
   color: white;
   font-size: ${({ fontSize }) => `${fontSize}px`};
   min-width: 250px;
+  width: 100%;
   &::placeholder {
     font-size: 15px;
   }
