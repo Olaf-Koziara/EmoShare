@@ -43,7 +43,7 @@ const PostCreatore = ({ userImage, user }) => {
           <Input
             type="text"
             placeholder={`
-What are you thinking about, ${user.userName}?`}
+What are you thinking about, ${user.name}?`}
             fontSize="20"
             value={postContent}
             onChange={(e) => SetPostContent(e.target.value)}
