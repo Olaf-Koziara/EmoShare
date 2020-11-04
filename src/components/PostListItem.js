@@ -1,6 +1,6 @@
 import React from "react";
 import { StyledPostParagraph, StyledPostWrapper } from "../styledComponents";
-import ProfileImage from "./ProfileImage";
+import ProfileImageLink from "./ProfileImageLink";
 
 const PostListItem = ({ post, own, imageUrl }) => {
   const { name, surname, email, content, date } = post;
@@ -8,7 +8,7 @@ const PostListItem = ({ post, own, imageUrl }) => {
 
   return (
     <StyledPostWrapper>
-      <ProfileImage
+      <ProfileImageLink
         imageUrl={imageUrl}
         email={email}
         name={name}
