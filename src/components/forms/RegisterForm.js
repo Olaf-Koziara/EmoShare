@@ -33,7 +33,8 @@ const RegisterForm = ({ setUser }) => {
       .put(blob, { contentType: blob.type })
       .then(() => {
         document.location.href = "/";
-      });
+      })
+      .catch(e);
   };
   const handleRegister = (event) => {
     auth
@@ -63,6 +64,7 @@ const RegisterForm = ({ setUser }) => {
   };
   return (
     <StyledRegisterFormWrapper mxAuto>
+      <ImageCropper setCroped={setBlob} />
       <Formik
         initialValues={{}}
         onSubmit={(event) => {
@@ -71,7 +73,6 @@ const RegisterForm = ({ setUser }) => {
       >
         {(formProps) => (
           <StyledForm>
-            <ImageCropper setCroped={setBlob} />
             <StyledField placeholder="Name" name="name" />
             <StyledField placeholder="Surname" name="surname" />
             <label htmlFor="dateBirth">Birth date:</label>
@@ -94,7 +95,7 @@ const RegisterForm = ({ setUser }) => {
               type="password"
             />
 
-            <Button type="submit">Register</Button>
+            <button type="submit">Register</button>
           </StyledForm>
         )}
       </Formik>
