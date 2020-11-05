@@ -58,4 +58,16 @@ export const Button = styled.button`
       width: 100%;
     }
   }
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: gray;
+      color: black;
+      &:after {
+        opacity: 0;
+      }
+      &:before {
+        opacity: 0;
+      }
+    `}
 `;
