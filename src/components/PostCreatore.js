@@ -7,7 +7,7 @@ import {
   StyledProfileImageWrapper,
 } from "../styledComponents";
 import { Input } from "./atoms/Input";
-import ProfileImage from "./ProfileImage";
+import ProfileImage from "./ProfileImageLink";
 import shareIcon from "../assets/icons/share.png";
 import { firestore } from "../firebaseConfig";
 
