@@ -1,7 +1,15 @@
 import React, { useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
+import { storage } from "../firebaseConfig";
 import getCroppedImg from "../helpers/cropImage";
-import { StyledCropperWrapper, StyledPhotoSelect } from "../styledComponents";
+import {
+  StyledCroppedImage,
+  StyledCroppedImageWrapper,
+  StyledCropperWrapper,
+  StyledPhotoSelect,
+  StyledProgressBar,
+} from "../styledComponents";
+import { Button } from "./atoms/Button";
 const ImageCropper = ({ setCroped }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -9,6 +17,7 @@ const ImageCropper = ({ setCroped }) => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [photo, setPhoto] = useState();
+  const [progress, setProgress] = useState(0);
   const handlePhotoFileChange = (e) => {
     const reader = new FileReader();
 
@@ -31,11 +40,19 @@ const ImageCropper = ({ setCroped }) => {
 
       let blob = await fetch(croppedImage).then((r) => r.blob());
       setCroppedImage(blob);
-      setCroped(blob);
+      upload(blob);
     } catch (e) {
       console.error(e);
     }
   }, [croppedAreaPixels, rotation]);
+  const upload = (blob) => {
+    const ref = storage.ref("photos").child("ss");
+    let uploadTask = ref.put(blob, { contentType: blob.type });
+
+    uploadTask.on("state_changed", (snapshot) => {
+      setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    });
+  };
 
   const onClose = useCallback(() => {
     setCroppedImage(null);
@@ -56,20 +73,34 @@ const ImageCropper = ({ setCroped }) => {
       />
       {photo ? (
         <>
-          <StyledCropperWrapper>
-            <Cropper
-              image={photo}
-              crop={crop}
-              rotation={rotation}
-              zoom={zoom}
-              aspect={4 / 4}
-              onCropChange={setCrop}
-              onRotationChange={setRotation}
-              onCropComplete={onCropComplete}
-              onZoomChange={setZoom}
-            />
-          </StyledCropperWrapper>
-          <button onClick={showCroppedImage}>Crop</button>
+          {progress === 100 ? (
+            <StyledCroppedImageWrapper>
+              <StyledCroppedImage
+                src={URL.createObjectURL(croppedImage)}
+                alt="profile"
+              />
+            </StyledCroppedImageWrapper>
+          ) : (
+            <>
+              <StyledCropperWrapper>
+                <Cropper
+                  image={photo}
+                  crop={crop}
+                  rotation={rotation}
+                  zoom={zoom}
+                  aspect={4 / 4}
+                  onCropChange={setCrop}
+                  onRotationChange={setRotation}
+                  onCropComplete={onCropComplete}
+                  onZoomChange={setZoom}
+                />
+              </StyledCropperWrapper>
+              <StyledProgressBar progress={progress} />
+            </>
+          )}
+          <Button disabled={progress === 100} onClick={showCroppedImage}>
+            {progress === 100 ? "Uploaded" : "Upload"}
+          </Button>
         </>
       ) : null}
     </div>
