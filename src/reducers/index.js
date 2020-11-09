@@ -1,5 +1,5 @@
 import { actionTypes } from "../actions/actionTypes";
-import { firestore } from "../firebaseConfig";
+import { firestore, storage } from "../firebaseConfig";
 import userImage from "../assets/user.png";
 const initialState = {
   user: {},
@@ -30,11 +30,11 @@ const emoShareReducer = (state = initialState, action) => {
       };
     }
     case actionTypes.addImageUrl: {
-      console.log(payload);
       return {
         ...state,
         profileImagesUrl: [...state.profileImagesUrl, payload],
       };
+      break;
     }
     case actionTypes.setActiveUsers: {
       return {
