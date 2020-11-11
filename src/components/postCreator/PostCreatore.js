@@ -5,11 +5,11 @@ import {
   StyledPostCreatorIcon,
   StyledPostCreatorWrapper,
   StyledProfileImageWrapper,
-} from "../styledComponents";
-import { Input } from "./atoms/Input";
-import ProfileImage from "./ProfileImageLink";
-import shareIcon from "../assets/icons/share.png";
-import { firestore } from "../firebaseConfig";
+} from "../../styledComponents";
+import { Input } from "../atoms/Input";
+import ProfileImage from "../ProfileImageLink";
+import shareIcon from "../../assets/icons/share.png";
+import { firestore } from "../../firebaseConfig";
 
 const PostCreatore = ({ userImage, user }) => {
   const addPost = () => {
@@ -25,7 +25,7 @@ const PostCreatore = ({ userImage, user }) => {
       name: user.name,
       surname: user.surname,
       date: new Date().toString(),
-      imageName: user.profileImage,
+      profileImage: user.profileImage,
     });
   };
   const [postContent, SetPostContent] = useState("");
@@ -43,7 +43,7 @@ const PostCreatore = ({ userImage, user }) => {
           <Input
             type="text"
             placeholder={`
-What are you thinking about, ${user.name}?`}
+What's in your mind, ${user.name}?`}
             fontSize="20"
             value={postContent}
             onChange={(e) => SetPostContent(e.target.value)}
@@ -57,7 +57,7 @@ What are you thinking about, ${user.name}?`}
   );
 };
 const mapStateToProps = (state) => ({
-  userImage: state.userImage,
+  userImage: state.user.profileImage,
   user: state.user,
 });
 
