@@ -4,4 +4,5 @@ export const actionTypes = {
   setPosts: "SET_POSTS",
   addImageUrl: "ADD_IMAGE_URL",
   setActiveUsers: "SET_ACTIVE_USERS",
+  setEmojis: "SET_EMOJIS",
 };
