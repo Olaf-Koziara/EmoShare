@@ -4,7 +4,7 @@ export const Button = styled.button`
   height: 60px;
   cursor: pointer;
   border-radius: 32px;
-  border: 2px solid #36c9c6;
+  border: 2px solid #fafafa;
   background-color: transparent;
   position: relative;
   text-align: center;
@@ -27,12 +27,12 @@ export const Button = styled.button`
     content: "";
     width: 40px;
     height: 100%;
-    background-color: red;
+    background-color: #f7f7f7;
     top: 0px;
     right: 0px;
     border-radius: 32px;
     opacity: 0;
-    z-index: -100;
+    z-index: 0;
     transition: 0.3s ease-in-out;
   }
   &:after {
@@ -40,10 +40,10 @@ export const Button = styled.button`
     content: "";
     width: 40px;
     height: 100%;
-    background-color: blue;
+    background-color: #e3e3e3;
     top: 0px;
     left: 0px;
-    z-index: -100;
+    z-index: 0;
     border-radius: 32px;
     opacity: 0;
     transition: 0.3s ease-in-out;
