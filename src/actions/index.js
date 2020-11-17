@@ -20,3 +20,7 @@ export const addImageUrlAction = (url) => ({
 export const setActiveUsersAction = (value) => {
   return { type: actionTypes.setActiveUsers, payload: value };
 };
+export const setEmojisAction = (emojis) => ({
+  type: actionTypes.setEmojis,
+  payload: emojis,
+});
