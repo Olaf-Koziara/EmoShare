@@ -5,4 +5,6 @@ export const actionTypes = {
   addImageUrl: "ADD_IMAGE_URL",
   setActiveUsers: "SET_ACTIVE_USERS",
   setEmojis: "SET_EMOJIS",
+  setCHatUsers: "SET_CHAT_USERS",
+  selectChat: "SELECT_CHAT",
 };

@@ -24,3 +24,11 @@ export const setEmojisAction = (emojis) => ({
   type: actionTypes.setEmojis,
   payload: emojis,
 });
+export const setChatUsersAction = (users) => ({
+  type: actionTypes.setCHatUsers,
+  payload: users,
+});
+export const selectChatAction = (user) => ({
+  type: actionTypes.selectChat,
+  payload: user,
+});
