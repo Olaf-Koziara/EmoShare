@@ -1,5 +1,5 @@
 import { Formik, Form } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { auth, firestore, storage } from "../../firebaseConfig";
 import {
   StyledField,
@@ -16,26 +16,18 @@ import "./datePicker.css";
 import { connect } from "react-redux";
 import { setUserAction } from "../../actions";
 import { Link } from "react-router-dom";
-
 import ImageCropper from "../ImageCropper";
+import Axios from "axios";
+import { Input } from "../atoms/Input";
+import PlaceInput from "../PlaceInput";
+import { randomString } from "../../helpers/random";
 
 const RegisterForm = ({ setUser }) => {
   const now = new Date();
   const [birthDate, setBirthDate] = useState(now);
   const [blob, setBlob] = useState();
-  const handleSubmitImage = (e, blob) => {
-    // upload blob to firebase 'images' folder with filename 'image'
-    console.log(blob);
+  const [url, setUrl] = useState("");
 
-    storage
-      .ref("photos")
-      .child(e.email)
-      .put(blob, { contentType: blob.type })
-      .then(() => {
-        document.location.href = "/";
-      })
-      .catch(e);
-  };
   const handleRegister = (event) => {
     auth
       .createUserWithEmailAndPassword(event.email, event.password)
@@ -45,26 +37,33 @@ const RegisterForm = ({ setUser }) => {
           birthDate: birthDate.toString(),
           email: event.email,
           name: event.name,
-          profileImage: event.file ? event.file.name : event.email,
+          profileImage: url,
           surname: event.surname,
-          follows: [event.email],
+          follows: [],
+          country: event.country ? event.country : "",
+          city: event.city ? event.city : "",
           uid: auth.currentUser?.uid,
+          docId: "",
         };
         console.log(user);
-        firestore.collection("users").add(user);
-        setUser(user);
-        setTimeout(() => {
-          document.location.href = "/";
-        }, 1500);
+        firestore
+          .collection("users")
+          .add(user)
+          .then((docRef) =>
+            firestore
+              .collection("users")
+              .doc(docRef.id)
+              .update({ docId: docRef.id }),
+          );
       })
       .then(() => {
         console.log(event);
-        handleSubmitImage(event, blob);
       });
   };
+
   return (
     <StyledRegisterFormWrapper mxAuto>
-      <ImageCropper setCroped={setBlob} />
+      <ImageCropper setUrl={setUrl} setCroped={setBlob} />
       <Formik
         initialValues={{}}
         onSubmit={(event) => {
@@ -88,6 +87,8 @@ const RegisterForm = ({ setUser }) => {
               maxDate={now}
               name="dateBirth"
             />
+
+            <PlaceInput setField={formProps.setFieldValue} />
             <StyledField placeholder="e-mail" name="email" type="email" />
             <StyledField
               placeholder="password"
@@ -95,7 +96,7 @@ const RegisterForm = ({ setUser }) => {
               type="password"
             />
 
-            <button type="submit">Register</button>
+            <Button type="submit">Register</Button>
           </StyledForm>
         )}
       </Formik>
