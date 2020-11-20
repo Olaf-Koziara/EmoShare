@@ -24,8 +24,8 @@ const LoginForm = () => {
     <Formik   initialValues={initialValues} onSubmit={(e)=>handleLogin(e)} >
     
       <StyledForm >
-        <StyledField placeHolder="e-mail" name="email" type="email" />
-        <StyledField placeHolder="password" name="password" type="password" />
+        <StyledField placeholder="e-mail" name="email" type="email" />
+        <StyledField placeholder="password" name="password" type="password" />
         <Button type="submit">Login</Button>
         <Link to="/register"> <Button >Register</Button></Link>
       </StyledForm>
