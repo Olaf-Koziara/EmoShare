@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { firestore } from "../../firebaseConfig";
+import { StyledChatsWrapper } from "../../styledComponents";
 import { wsUrl } from "../../utils/wsUrl";
 import ChatInput from "./ChatInput";
 
@@ -59,29 +60,27 @@ class Chat extends Component {
     };
     console.log(message);
     this.ws.send(JSON.stringify(message));
-    this.addMessage({ name: message.name, message: message.message });
+    this.addMessage({
+      name: message.name,
+      message: message.message,
+      own: true,
+    });
   };
   addMessage = (message) =>
     this.setState({ messages: [message, ...this.state.messages] });
   render() {
     return (
-      <div>
+      <StyledChatsWrapper>
         {this.props.selectedChats
           ? this.props.selectedChats.map((index) => (
-              <div>
-                {this.state.messages.map((message) =>
-                  message.name == this.props.chatUsers[index].name
-                    ? message.message
-                    : null,
-                )}
-                <ChatInput
-                  sendMessage={this.sendMessage}
-                  uid={this.props.chatUsers[index].chatId}
-                />
-              </div>
+              <ChatInput
+                messages={this.state.messages}
+                sendMessage={this.sendMessage}
+                uid={this.props.chatUsers[index].chatId}
+              />
             ))
           : null}
-      </div>
+      </StyledChatsWrapper>
     );
   }
 }
