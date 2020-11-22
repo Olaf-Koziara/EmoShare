@@ -10,7 +10,9 @@ wss.getUniqueID = function () {
   return s4() + s4() + "-" + s4();
 };
 wss.on("connection", (ws) => {
-  ws.id = wss.getUniqueID();
+  if (!ws.id) {
+    ws.id = wss.getUniqueID();
+  }
   wss.clients.forEach((client) => {
     console.log(client.id);
     client.send(JSON.stringify({ uid: client.id }));
