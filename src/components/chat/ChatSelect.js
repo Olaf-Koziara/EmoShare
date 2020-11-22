@@ -3,7 +3,11 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { selectChatAction } from "../../actions";
 import { firestore } from "../../firebaseConfig";
 import withVisiblity from "../../hoc/withVisiblity";
-import { StyledChatIcon, StyledChatSelectList } from "../../styledComponents";
+import {
+  StyledChatIcon,
+  StyledChatSelectList,
+  StyledChatSelectListItem,
+} from "../../styledComponents";
 import chatIcon from "../../assets/icons/001-chat.png";
 import Chat from "./Chat";
 const ChatSelect = ({ isVisible, setVisibility }) => {
@@ -20,11 +24,12 @@ const ChatSelect = ({ isVisible, setVisibility }) => {
         <StyledChatSelectList>
           {chatUsers.length > 0
             ? chatUsers.map((user, index) => (
-                <li key={index}>
-                  <button onClick={() => dispatch(selectChatAction(index))}>
-                    {user.name + " " + user.surname}
-                  </button>
-                </li>
+                <StyledChatSelectListItem
+                  onClick={() => dispatch(selectChatAction(index))}
+                  key={index}
+                >
+                  {user.name + " " + user.surname}
+                </StyledChatSelectListItem>
               ))
             : null}
         </StyledChatSelectList>
