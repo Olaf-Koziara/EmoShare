@@ -7,7 +7,7 @@ import {
   StyledPlaceInputParagraph,
 } from "../styledComponents";
 
-const PlaceInput = () => {
+const PlaceInput = ({ setField }) => {
   const [countryInput, setCountryInput] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [countries, setCountries] = useState([]);
@@ -17,10 +17,12 @@ const PlaceInput = () => {
   const selectCountry = (value) => {
     setSelectedCountry(value);
     setCountryInput(value);
+    setField("country", value);
   };
   const selectCity = (value) => {
     setCityInput(value);
     setSelectedCity(value);
+    setField("city", value);
   };
   useEffect(() => {
     if (countryInput.length > 1) {
