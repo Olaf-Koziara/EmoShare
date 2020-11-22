@@ -1,11 +1,14 @@
 import React from "react";
-
-const ChatInput = ({ sendMessage, uid }) => {
+import "./ChatInput.css";
+const ChatInput = ({ sendMessage, uid, messages }) => {
   return (
-    <form onSubmit={(e) => sendMessage(e, uid)}>
-      <input name="message" />
-      <button type="submit">Send</button>
-    </form>
+    <div className="chatInputWrapper">
+      <div className="messagesWrapper"></div>
+      <form onSubmit={(e) => sendMessage(e, uid)}>
+        <input name="message" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
   );
 };
 
