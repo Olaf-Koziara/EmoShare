@@ -1,0 +1,13 @@
+.chatInputWrapper {
+  height: 430px;
+  width: 270px;
+  background-color: #21262b;
+  border-radius: 4px;
+  padding: 0 5px;
+}
+.messagesWrapper {
+  height: 400px;
+  width: 250px;
+  margin: auto;
+  background-color: #484949;
+}
