@@ -21,19 +21,9 @@ import { connect, useDispatch } from "react-redux";
 import ProfileImage from "../ProfileImageLink";
 import { setUserImageAction } from "../../actions";
 import Search from "../search/Search";
+import { Link } from "react-router-dom";
 
-const Navbar = ({ user, profileImage }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (user.profileImage) {
-      const pathRef = storage.ref("/photos/" + user.profileImage);
-
-      pathRef.getDownloadURL().then((url) => {
-        dispatch(setUserImageAction(url));
-      });
-    }
-  }, [user]);
+const Navbar = ({ user, userImage }) => {
   return (
     <StyledNavbarWrapper>
       <StyledNavStartWrapper>
@@ -43,7 +33,9 @@ const Navbar = ({ user, profileImage }) => {
         <StyledNavLink to="/">
           <StyledNavIcon src={homeIcon} alt="home" />
         </StyledNavLink>
-        <StyledNavIcon src={firendsIcon} alt="friends" />
+        <StyledNavLink to="/friends">
+          <StyledNavIcon src={firendsIcon} alt="friends" />
+        </StyledNavLink>
       </StyledNavMidtWrapper>
       {user ? (
         <StyledNavEndWrapper>
@@ -51,13 +43,15 @@ const Navbar = ({ user, profileImage }) => {
             <ProfileImage
               name={user.name}
               surname={user.surname}
-              email={user.email}
-              imageUrl={profileImage}
+              uid={user.uid}
+              imageUrl={userImage}
             />
           </StyledNavEndButton>
-          <button onClick={() => auth.signOut()}>
-            <StyledNavIcon src={logoutIcon} alt="logout" />
-          </button>
+          <StyledNavLink to="/">
+            <button onClick={() => auth.signOut()}>
+              <StyledNavIcon src={logoutIcon} alt="logout" />
+            </button>
+          </StyledNavLink>
         </StyledNavEndWrapper>
       ) : (
         "null"
@@ -67,7 +61,7 @@ const Navbar = ({ user, profileImage }) => {
 };
 const mapStateToProps = (state) => ({
   user: state.user,
-  profileImage: state.userImage,
+  userImage: state.user.profileImage,
 });
 
 export default connect(mapStateToProps)(Navbar);
