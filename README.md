@@ -1,4 +1,4 @@
-## Walletier
+## EmoShare
 
 EmoShare is social media application with live chat inspired by facebook.
 Netlify: https://musing-curran-518f71.netlify.app/
