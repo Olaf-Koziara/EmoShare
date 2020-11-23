@@ -3,11 +3,35 @@
   width: 270px;
   background-color: #21262b;
   border-radius: 4px;
-  padding: 0 5px;
+  padding: 6px 5px;
 }
 .messagesWrapper {
-  height: 400px;
+  height: 335px;
   width: 250px;
   margin: auto;
-  background-color: #484949;
+
+  overflow: auto;
+}
+.s {
+}
+.chatTextInput {
+  background-color: transparent;
+  outline: none;
+  border: 0;
+  border-bottom: 1px solid #666666;
+  width: 75%;
+  margin-right: 10px;
+}
+.textForm {
+  margin-bottom: 10px;
+}
+.borderWrapper {
+  border-bottom: 1px solid #bebebe;
+  display: flex;
+  justify-content: space-between;
+}
+.sendButton {
+  background-color: #bebebe;
+  border-radius: 10px;
+  padding: 8px;
 }
