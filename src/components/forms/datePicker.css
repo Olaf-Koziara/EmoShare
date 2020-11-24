@@ -4,6 +4,9 @@
   border-radius: 5px;
   padding: 0 20px;
   font-size: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 .react-datepicker-ignore-onclickoutside {
   box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
@@ -11,5 +14,9 @@
   border-radius: 5px;
   padding: 0 20px;
   font-size: 16px;
-  outline: ;
+  margin-left: auto;
+  margin-right: auto;
+}
+.react-datepicker__input-container {
+  text-align: center;
 }

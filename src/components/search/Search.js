@@ -16,16 +16,9 @@ const Search = ({
   addImageUrl,
   imagesUrls,
 }) => {
-  const [users, setUsers] = useState([]);
-  Axios.get(
-    "https://emoji-api.com/categories?access_key=79a64a94f2e74f9f30b1c3b06ffbc6c6420c20c2",
-    {
-      data: { slug: "smileys-emotion" },
-    },
-  ).then((value) => console.log(value));
   const searchUsers = (e) => {
     const value = e.target.value;
-    console.log(value);
+    console.log(value.length);
     if (value.length === 0) {
       setActiveUsers([]);
       setVisibility(false);
@@ -39,6 +32,7 @@ const Search = ({
       .collection("users")
       .get()
       .then((querySnapshot) => {
+        console.log("wrf");
         let usersTemp = [];
         querySnapshot.forEach((doc) => {
           const user = doc.data();
@@ -46,7 +40,7 @@ const Search = ({
 
           if (
             userNames.toLowerCase().includes(value.toLowerCase()) &&
-            value.length >= 3
+            value.length >= 2
           ) {
             usersTemp = [...usersTemp, user];
           }
@@ -59,12 +53,17 @@ const Search = ({
   return (
     <>
       <StyledNavSearchWrapper>
-        <button>
-          {" "}
-          <StyledNavIcon src={searchIcon} alt="search" />{" "}
-        </button>
-        <Input onChange={(e) => searchUsers(e)} />
-        {isVisible ? <SearchList /> : null}
+        <div className="d-flex">
+          <button>
+            {" "}
+            <StyledNavIcon src={searchIcon} alt="search" />{" "}
+          </button>
+          <Input
+            placeholder="Look for friends"
+            onChange={(e) => searchUsers(e)}
+          />
+        </div>
+        {isVisible ? <SearchList setVisibility={setVisibility} /> : null}
       </StyledNavSearchWrapper>
     </>
   );

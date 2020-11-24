@@ -1,17 +1,43 @@
-import React, { useState } from "react";
-import Profile from "../components/Profile";
+import React, { useEffect, useState } from "react";
+import { connect, useSelector } from "react-redux";
+import PostsList from "../components/postCreator/PostsList";
+import Profile from "../components/Profile.js";
 import { firestore } from "../firebaseConfig";
 
-const ProfileView = (props) => {
+const ProfileView = ({ location, actualUser }) => {
   const [user, setUser] = useState();
-  const { email } = props.location.state;
-  const data = firestore.collection("users").where("email", "==", email);
+  const [userPosts, setUserPosts] = useState([]);
+  const { uid } = location.state;
 
-  data.onSnapshot((snapshot) => {
-    setUser(snapshot.docs[0].data());
-  });
+  const postsData = firestore.collection("posts").where("uid", "==", uid);
 
-  return <>{user ? <Profile user={user} /> : null}</>;
+  useEffect(() => {
+    firestore
+      .collection("users")
+      .where("uid", "==", uid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => setUser(doc.data()));
+      });
+    postsData.onSnapshot((snapshot) => {
+      const posts = snapshot.docs.map((post) => post.data());
+      setUserPosts(posts);
+    });
+  }, []);
+
+  return (
+    <>
+      {user ? (
+        <>
+          <Profile own={actualUser.uid === uid} user={user} />{" "}
+          <PostsList posts={userPosts} />
+        </>
+      ) : null}{" "}
+    </>
+  );
 };
+const mapStateToProps = (state) => ({
+  actualUser: state.user,
+});
 
-export default ProfileView;
+export default connect(mapStateToProps)(ProfileView);

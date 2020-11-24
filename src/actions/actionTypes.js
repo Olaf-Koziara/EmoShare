@@ -7,4 +7,5 @@ export const actionTypes = {
   setEmojis: "SET_EMOJIS",
   setCHatUsers: "SET_CHAT_USERS",
   selectChat: "SELECT_CHAT",
+  closeChat: "CLOSE_CHAT",
 };

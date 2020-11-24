@@ -17,6 +17,7 @@ class Chat extends Component {
         .collection("users")
         .doc(this.props.user.docId)
         .update({ chatId: this.state.chatId });
+      console.log("up");
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -30,7 +31,7 @@ class Chat extends Component {
         .collection("users")
         .doc(nextProps.user.docId)
         .update({ chatId: this.state.chatId });
-
+      console.log("up");
       this.ws.onmessage = (evt) => {
         const message = JSON.parse(evt.data);
 
@@ -47,7 +48,7 @@ class Chat extends Component {
         .collection("users")
         .doc(nextProps.user.docId)
         .update({ chatId: null });
-
+      console.log("up");
       this.setState({ ws: new WebSocket(wsUrl) });
     };
   }
@@ -100,6 +101,7 @@ class Chat extends Component {
                       message.to === this.props.chatUsers[index].uid,
                   )}
                   sendMessage={this.sendMessage}
+                  chatIndex={index}
                 />
               ) : null,
             )

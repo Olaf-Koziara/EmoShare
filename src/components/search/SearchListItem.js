@@ -4,12 +4,12 @@ import { StyledSearchListItem } from "../../styledComponents";
 import ProfileImageLink from "../ProfileImageLink";
 
 const SearchListItem = ({ user }) => {
-  const { profileImage, email, name, surname } = user;
+  const { profileImage, uid, name, surname } = user;
   return (
     <StyledSearchListItem>
       <ProfileImageLink
         imageUrl={profileImage}
-        email={email}
+        uid={uid}
         name={name}
         surname={surname}
       />

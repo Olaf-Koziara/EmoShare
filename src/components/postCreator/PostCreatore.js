@@ -10,24 +10,38 @@ import { Input } from "../atoms/Input";
 import ProfileImage from "../ProfileImageLink";
 import shareIcon from "../../assets/icons/share.png";
 import { firestore } from "../../firebaseConfig";
+import EmojiSlider from "../EmojiSlider";
+import ImageCropper from "../ImageCropper";
+import { auth } from "firebase";
 
 const PostCreatore = ({ userImage, user }) => {
+  const [imageUrl, setImageUrl] = useState();
+  const [emoji, setEmoji] = useState("");
   const addPost = () => {
-    console.log({
-      content: postContent,
-      email: user.email,
-      name: user.name,
-      surname: user.surname,
-    });
-    firestore.collection("posts").add({
-      content: postContent,
-      email: user.email,
-      name: user.name,
-      surname: user.surname,
-      date: new Date().toString(),
-      profileImage: user.profileImage,
-    });
+    firestore
+      .collection("posts")
+      .add({
+        content: postContent,
+        comments: [],
+        userId: user.uid,
+        name: user.name,
+        surname: user.surname,
+        date: new Date().toString(),
+        postImage: imageUrl ? imageUrl : null,
+        profileImage: user.profileImage,
+        docId: "",
+      })
+      .then((docRef) =>
+        firestore
+          .collection("posts")
+          .doc(docRef.id)
+          .update({ docId: docRef.id })
+          .then(() => {
+            SetPostContent("");
+          }),
+      );
   };
+
   const [postContent, SetPostContent] = useState("");
 
   return (
@@ -37,7 +51,7 @@ const PostCreatore = ({ userImage, user }) => {
           <ProfileImage
             surname={user.surname}
             name={user.name}
-            email={user.email}
+            uid={user.uid}
             imageUrl={userImage}
           />
           <Input
@@ -49,9 +63,12 @@ What's in your mind, ${user.name}?`}
             onChange={(e) => SetPostContent(e.target.value)}
           />
         </div>
+
         <button onClick={addPost}>
           <StyledPostCreatorIcon src={shareIcon} />
         </button>
+        <EmojiSlider />
+        <ImageCropper setUrl={setImageUrl} fullAspect={true} />
       </StyledPostCreatorWrapper>
     </>
   );

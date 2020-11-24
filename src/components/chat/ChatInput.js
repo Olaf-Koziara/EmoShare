@@ -9,8 +9,11 @@ import { Input } from "../atoms/Input";
 import ProfileImageLink from "../ProfileImageLink";
 import "./ChatInput.css";
 import closeIcon from "../../assets/icons/close.png";
-const ChatInput = ({ photo, sendMessage, messages, chatUser }) => {
+import { useDispatch } from "react-redux";
+import { closeChatAction } from "../../actions";
+const ChatInput = ({ photo, sendMessage, messages, chatUser, chatIndex }) => {
   const { name, surname, uid, chatId, profileImage } = chatUser;
+  const dispatch = useDispatch();
   return (
     <div className="chatInputWrapper">
       <div className="borderWrapper">
@@ -18,7 +21,9 @@ const ChatInput = ({ photo, sendMessage, messages, chatUser }) => {
           imageUrl={profileImage}
           uid={uid}
         >{`${name} ${surname}`}</ProfileImageLink>
-        <StyledCloseIcon src={closeIcon} alt="close" size={"medium"} />
+        <button onClick={() => dispatch(closeChatAction(chatIndex))}>
+          <StyledCloseIcon src={closeIcon} alt="close" size={"medium"} />
+        </button>
       </div>
       <div className="messagesWrapper">
         {messages

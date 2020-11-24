@@ -6,6 +6,7 @@ import {
   StyledForm,
   StyledRegisterFormWrapper,
   StyledPhotoSelect,
+  StyledDateLabel,
 } from "../../styledComponents";
 import { Button } from "../atoms/Button";
 import DatePicker from "react-datepicker";
@@ -74,7 +75,7 @@ const RegisterForm = ({ setUser }) => {
           <StyledForm>
             <StyledField placeholder="Name" name="name" />
             <StyledField placeholder="Surname" name="surname" />
-            <label htmlFor="dateBirth">Birth date:</label>
+            <StyledDateLabel htmlFor="dateBirth">Birth date:</StyledDateLabel>
             <DatePicker
               onChange={(date) => {
                 setBirthDate(date);

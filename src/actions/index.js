@@ -28,7 +28,11 @@ export const setChatUsersAction = (users) => ({
   type: actionTypes.setCHatUsers,
   payload: users,
 });
-export const selectChatAction = (user) => ({
+export const selectChatAction = (index) => ({
   type: actionTypes.selectChat,
-  payload: user,
+  payload: index,
+});
+export const closeChatAction = (index) => ({
+  type: actionTypes.closeChat,
+  payload: index,
 });

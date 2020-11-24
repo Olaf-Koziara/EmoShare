@@ -1,7 +1,75 @@
 import { Field, Form } from "formik";
-import { NavLink } from "react-router-dom";
-import styled, { css } from "styled-components";
+import { Link, NavLink } from "react-router-dom";
+import styled, { css, keyframes } from "styled-components";
 import LoginPageBack from "../assets/socialBack.jpg";
+const spin = keyframes`
+  0% {
+   transform:rotate(0deg);
+  }
+  100% {
+    transform:rotate(360deg);
+  }
+  
+`;
+//global
+export const StyledSpinner = styled.img`
+  animation: ${spin} 2s linear infinite;
+
+  width: ${({ size }) =>
+    size === "small" ? "32px" : size === "medium" ? "64px" : "128px"};
+`;
+export const StyledSpinnerWrapper = styled.div`
+  transform: translate(-50%, -50%);
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+`;
+export const StyledCloseIcon = styled.img`
+  width: ${({ size }) =>
+    size === "small" ? "8px" : size === "medium" ? "24px" : "32px"};
+  height: ${({ size }) =>
+    size === "small" ? "8px" : size === "medium" ? "24px" : "32px"};
+
+  border-radius: 8px;
+`;
+export const StyledCitiesInputWrapper = styled.div`
+  position: relative;
+  text-align: center;
+`;
+
+export const StyledPlaceInputParagraph = styled.p`
+  padding: 2px;
+  margin: 3px;
+  border: 1px solid rgba(200, 200, 200, 0.6);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    background-color: rgba(230, 230, 230, 0.8);
+  }
+`;
+export const StyledAutocompleteWrapper = styled.div`
+  position: absolute;
+
+  background: #fafafa;
+
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  padding: 10px;
+  color: #666;
+  width: 90%;
+`;
+export const StyledEmojiSliderWrapper = styled.ul`
+  list-style: none;
+  display: flex;
+  overflow-x: auto;
+  margin: 5px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+`;
+export const StyledProfileLink = styled(Link)`
+  display: flex;
+`;
 //Login page
 export const StyledLoginPageWrapper = styled.div`
   background-position: auto;
@@ -37,7 +105,7 @@ export const StyledForm = styled(Form)`
 `;
 export const StyledField = styled(Field)`
   line-height: 50px;
-  background: #fafafa;
+  background-color: #fafafa;
 
   box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
   margin-bottom: 5px;
@@ -45,6 +113,9 @@ export const StyledField = styled(Field)`
   padding: 0 20px;
   font-size: 16px;
   color: #666;
+  width: 260px;
+  margin-left: auto;
+  margin-right: auto;
 
   transition: all 0.4s ease;
 `;
@@ -67,7 +138,7 @@ export const StyledLoginFormWrapper = styled.div`
 `;
 export const StyledRegisterFormWrapper = styled.div`
   width: 300px;
-  margin: 200px 0px;
+  margin: 5% 0px;
 
   ${({ mxAuto }) =>
     mxAuto &&
@@ -113,12 +184,34 @@ export const StyledPhotoSelect = styled.div`
     box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.6);
   }
   color: rgba(40, 40, 40, 0.4);
-  margin: 20px 5px;
 `;
 export const StyledCropperWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 400px;
+  z-index: 100;
+`;
+export const StyledProgressBar = styled.div`
+  width: ${({ progress }) => progress};
+  height: 10px;
+  background-color: green;
+`;
+export const StyledCroppedImageWrapper = styled.div`
+  width: 300px;
+  height: 300px;
+  z-index: 100;
+  position: relative;
+`;
+export const StyledCroppedImage = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+export const StyledImageCropperWrapper = styled.div`
+  margin: auto;
+`;
+export const StyledDateLabel = styled.label`
+  text-align: center;
+  color: black;
 `;
 //Navigation
 export const StyledNavbarWrapper = styled.div`
@@ -146,8 +239,11 @@ export const StyledNavEndWrapper = styled.div`
 `;
 export const StyledNavIcon = styled.img`
   filter: invert(75%);
-  width: 45px;
+  width: 30px;
   margin: auto 0;
+  @media (min-width: 900px) {
+    width: 45px;
+  }
 `;
 export const StyledProfileImage = styled.img`
   width: ${({ medium, large }) =>
@@ -155,8 +251,6 @@ export const StyledProfileImage = styled.img`
   min-height: ${({ medium, large }) =>
     medium ? "100px" : large ? "200px" : "40px"};
 
-  margin-left: auto;
-  margin-right: 20px;
   border: 1px solid rgba(100, 100, 100, 0.8);
 `;
 
@@ -165,14 +259,18 @@ export const StyledNavEndButton = styled.button`
   margin-right: 20px;
 `;
 export const StyledNavSearchWrapper = styled.div`
-  width: 200px;
+  width: 150px;
   position: relative;
 `;
 export const StyledSearchList = styled.ul`
   position: absolute;
-  width: 190px;
+  width: 140px;
   height: 100%;
   background-color: rgba(50, 50, 50, 0.6);
+`;
+
+export const StyledSearchListItem = styled.li`
+  border: 1px solid #666;
 `;
 //profile
 export const StyledProfileWrapper = styled.div`
@@ -190,7 +288,7 @@ export const StyledProfileImageWrapper = styled.div`
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 200px;
+  margin-top: 130px;
 `;
 export const StyledProfileTextWrapper = styled.div`
   width: 70%;
@@ -203,16 +301,23 @@ export const StyledProfileTextWrapper = styled.div`
 export const StledProfileTextParagraph = styled.p`
   margin: 10px;
 `;
+export const StyledProfileNameWrapper = styled.div`
+  font-size: 30px;
+`;
 //home
+export const StyledHomeWrapper = styled.div``;
 export const StyledPostCreatorWrapper = styled.div`
   background-color: #3e4750;
   border-radius: 5px;
-  width: 400px;
-  height: 120px;
+  width: 300px;
+  @media (min-width: 900px) {
+    width: 400px;
+  }
+  height: 150px;
   margin: 30px auto;
   padding: 20px;
   display: grid;
-  grid-template-columns: 75% 25%;
+  grid-template-columns: 60% 40%;
 `;
 export const StyledPostCreatorIcon = styled.img`
   width: 48px;
@@ -234,6 +339,83 @@ export const StyledPostWrapper = styled.li`
 export const StyledPostParagraph = styled.p`
   margin: 10px;
 `;
+export const StyledPostInfoWrapper = styled.div`
+  display: flex;
+  border-bottom: 0.5px solid #666;
+`;
+export const StyledPostImage = styled.img`
+  width: 100%;
+  height: 100;
+`;
+export const StyledAddCommentWrapper = styled.div`
+  width: 30%;
+  filter: invert(70%);
+`;
+export const StyledCommentContentWrapper = styled.div`
+  margin-top: 3px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+`;
 export const StyledNavLink = styled(NavLink)`
   margin-top: 8px;
+`;
+export const StyledCommentListItem = styled.li`
+  margin: 5px;
+  display: flex;
+`;
+//Chat
+export const StyledChatIcon = styled.img`
+  position: fixed;
+  bottom: 10%;
+  right: 3%;
+`;
+export const StyledChatSelectList = styled.ul`
+  position: fixed;
+  width: 10%;
+  bottom: 10%;
+  right: 1%;
+  list-style: none;
+  background-color: #21262b;
+  border-radius: 8px;
+  height: 400px;
+`;
+export const StyledChatSelectListItem = styled.li`
+  padding: 5px;
+  margin: 6px 0;
+  color: whitesmoke;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+  &:hover {
+    background-color: #515457;
+  }
+  border-radius: 8px;
+`;
+export const StyledChatsWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+  gap: 40px;
+`;
+export const StyledMessageWrapper = styled.div`
+  display: flex;
+
+  ${({ own }) =>
+    own &&
+    css`
+      justify-content: flex-end;
+    `}
+  margin:3px;
+`;
+export const StyledMessageContainer = styled.div`
+  border-radius: 20px;
+  background-color: #757575;
+  padding: 8px;
+  ${({ own }) =>
+    own &&
+    css`
+      background-color: rgb(177, 177, 177);
+      color: black;
+    `}
 `;

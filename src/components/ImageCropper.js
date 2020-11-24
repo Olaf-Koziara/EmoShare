@@ -13,7 +13,15 @@ import {
   StyledImageCropperWrapper,
 } from "../styledComponents";
 import { Button } from "./atoms/Button";
-const ImageCropper = ({ setCroped, setUrl, fullAspect }) => {
+const ImageCropper = ({
+  setCroped,
+  setUrl,
+  fullAspect,
+  isVisible,
+  setIsVisible,
+  showCropped,
+  reset,
+}) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
@@ -66,7 +74,9 @@ const ImageCropper = ({ setCroped, setUrl, fullAspect }) => {
   return (
     <StyledImageCropperWrapper>
       <label htmlFor="file">
-        <StyledPhotoSelect>Select photo</StyledPhotoSelect>
+        <StyledPhotoSelect>
+          {progress === 100 ? "Uploaded" : "Select photo"}
+        </StyledPhotoSelect>
       </label>
       <input
         style={{ display: "none" }}
@@ -76,9 +86,9 @@ const ImageCropper = ({ setCroped, setUrl, fullAspect }) => {
         type="file"
         onChange={(e) => handlePhotoFileChange(e)}
       />
-      {photo ? (
+      {photo && progress !== 100 ? (
         <>
-          {progress === 100 ? (
+          {progress === 100 && showCropped ? (
             <StyledCroppedImageWrapper>
               <StyledCroppedImage
                 src={URL.createObjectURL(croppedImage)}

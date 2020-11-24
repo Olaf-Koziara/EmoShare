@@ -1,11 +1,13 @@
 body {
   height: 100%;
   background-color: #262b30;
+
   color: white;
 }
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -21,4 +23,20 @@ button {
   border: 0;
   background-color: transparent;
   cursor: pointer;
+  color: white;
+}
+.d-flex {
+  display: flex;
+}
+.space-btwn {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.text-center {
+  text-align: center;
+}
+.z1 {
+  z-index: 100;
+  position: relative;
 }

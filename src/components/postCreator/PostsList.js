@@ -5,8 +5,35 @@ import { StyledPostsList } from "../../styledComponents";
 import PostListItem from "./PostListItem";
 
 const PostsList = ({ posts, user, images }) => {
-  const _postsRender = posts.map((post) => {
-    return <PostListItem own={user.email === post.email} post={post} />;
+  const addComment = (e, postDocId, postComments) => {
+    e.preventDefault();
+
+    firestore
+      .collection("posts")
+      .doc(postDocId)
+      .update({
+        comments: [
+          ...postComments,
+          {
+            name: user.name,
+            surname: user.surname,
+            uid: user.uid,
+            content: e.target.content.value,
+            image: user.profileImage,
+          },
+        ],
+      });
+    e.target.reset();
+  };
+  const _postsRender = posts.map((post, index) => {
+    return (
+      <PostListItem
+        key={post.content}
+        own={user.email === post.email}
+        post={post}
+        addComment={addComment}
+      />
+    );
   });
   return <StyledPostsList>{images ? _postsRender : null}</StyledPostsList>;
 };

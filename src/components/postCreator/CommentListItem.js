@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { StyledCommentContentWrapper } from "../../styledComponents";
+import {
+  StyledCommentContentWrapper,
+  StyledCommentListItem,
+} from "../../styledComponents";
 import ProfileImageLink from "../ProfileImageLink";
 
 const CommentListItem = ({ comment }) => {
   const { name, surname, content, image, uid } = comment;
   return (
-    <li className="d-flex">
+    <StyledCommentListItem className="d-flex">
       <ProfileImageLink imageUrl={image} uid={uid} />
       <div>
         <Link
@@ -17,7 +20,7 @@ const CommentListItem = ({ comment }) => {
 
         <StyledCommentContentWrapper>{content}</StyledCommentContentWrapper>
       </div>
-    </li>
+    </StyledCommentListItem>
   );
 };
 
