@@ -75,7 +75,7 @@ const Root = ({
     //     setCurrentUser(null);
     //   }
     // });
-  }, []);
+  // }, []);
   useEffect(() => {
     if (currentUser) {
       const activeUsers = firestore
