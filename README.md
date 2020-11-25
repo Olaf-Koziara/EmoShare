@@ -4,8 +4,10 @@ EmoShare is social media application with live chat inspired by facebook.
 Netlify: https://musing-curran-518f71.netlify.app/
 
 Accounts for test:
-e-mail: test.test@gmail.com password:12test34
-e-mail: test.test1@gmail.com password:12test34
+
+# 1. test.test@gmail.com 12test34
+
+# 2. test.test1@gmail.com 12test34
 
 ## Table of contents
 
