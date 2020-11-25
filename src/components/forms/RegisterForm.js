@@ -58,7 +58,9 @@ const RegisterForm = ({ setUser }) => {
           );
       })
       .then(() => {
-        console.log(event);
+        setTimeout(() => {
+          document.location.href = "/";
+        }, 100);
       });
   };
 
