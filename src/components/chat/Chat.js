@@ -13,7 +13,11 @@ class Chat extends Component {
   ws = "";
 
   componentDidUpdate(prevState) {
-    if (this.state.chatId !== prevState.chatId && this.props.user.docId) {
+    if (
+      this.state.chatId !== prevState.chatId &&
+      this.props.user.docId &&
+      this.state.chatId
+    ) {
       firestore
         .collection("users")
         .doc(this.props.user.docId)
