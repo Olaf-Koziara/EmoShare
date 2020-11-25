@@ -36,7 +36,7 @@ const ChatInput = ({ photo, sendMessage, messages, chatUser, chatIndex }) => {
             ))
           : null}
       </div>
-      <form className="textForm" onSubmit={(e) => sendMessage(e, chatId, uid)}>
+      <form className="textForm" onSubmit={(e) => sendMessage(e, chatId)}>
         <input className="chatTextInput" name="message" />
         <button className="sendButton" type="submit">
           Send
