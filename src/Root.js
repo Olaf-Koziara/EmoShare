@@ -22,9 +22,10 @@ const Root = ({
   addImageUrl,
   setEmojis,
   setChatUsers,
+  userFollows,
 }) => {
   const [currentUser, setCurrentUser] = useState(null);
-
+  const [tempUser, setTempUser] = useState();
   const compare = (a, b) => {
     if (a < b) return 1;
     if (b < a) return -1;
@@ -35,36 +36,43 @@ const Root = ({
     auth.onAuthStateChanged((user) => {
       if (user) {
         setCurrentUser(user.uid);
-        const users = firestore
+        firestore
           .collection("users")
-          .where("uid", "==", user.uid);
+          .where("uid", "==", user.uid)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              const tempUser = doc.data();
+              setUser(tempUser);
 
-        users.onSnapshot((snapshot) => {
-          const user = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-
-          setUser(user[0]);
-
-          if (user[0].follows.length >= 0) {
-            const postsData = firestore
-              .collection("posts")
-              .where("userId", "in", [...user[0].follows, user[0].uid]);
-            postsData.onSnapshot((snapshot) => {
-              const posts = snapshot.docs.map((post) => post.data());
-              if (posts.length > 0) {
-                setPosts(
-                  posts.sort((a, b) =>
-                    compare(new Date(a.date), new Date(b.date)),
-                  ),
-                );
-              } else {
-                setPosts(null);
+              if (tempUser.follows.length >= 0) {
+                const postsData = firestore
+                  .collection("posts")
+                  .where("userId", "in", [...tempUser.follows, tempUser.uid]);
+                postsData.onSnapshot((snapshot) => {
+                  const posts = snapshot.docs.map((post) => post.data());
+                  if (posts.length > 0) {
+                    setPosts(
+                      posts.sort((a, b) =>
+                        compare(new Date(a.date), new Date(b.date)),
+                      ),
+                    );
+                  } else {
+                    setPosts(null);
+                  }
+                });
+                const activeUsers = firestore
+                  .collection("users")
+                  .where("chatId", "!=", null);
+                activeUsers.onSnapshot((snapshot) => {
+                  const activeUsersArray = snapshot.docs
+                    .map((user) => user.data())
+                    .filter((user) => tempUser.follows.includes(user.uid));
+                  setChatUsers(activeUsersArray);
+                });
               }
             });
-          }
-        });
+          });
 
         // Axios.get(
         //   "https://emoji-api.com/categories/smileys-emotion?access_key=79a64a94f2e74f9f30b1c3b06ffbc6c6420c20c2",
@@ -78,15 +86,6 @@ const Root = ({
   }, []);
   useEffect(() => {
     if (currentUser) {
-      const activeUsers = firestore
-        .collection("users")
-        .where("chatId", "!=", null);
-      activeUsers.onSnapshot((snapshot) => {
-        const activeUsersArray = snapshot.docs
-          .map((user) => user.data())
-          .filter((user) => user.uid !== currentUser);
-        setChatUsers(activeUsersArray);
-      });
     }
   }, [currentUser]);
 
@@ -100,7 +99,6 @@ const Root = ({
 };
 const mapStateToProps = (state) => ({
   posts: state.posts,
-  userFollows: state.user.follows,
 });
 const mapDispatchToProps = (dispatch) => ({
   setUser: (user) => dispatch(setUserAction(user)),
