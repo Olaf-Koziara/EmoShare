@@ -64,6 +64,7 @@ export const StyledEmojiSliderWrapper = styled.ul`
   display: flex;
   overflow-x: auto;
   margin: 5px;
+  height: 50px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 `;
@@ -313,7 +314,7 @@ export const StyledPostCreatorWrapper = styled.div`
   @media (min-width: 900px) {
     width: 400px;
   }
-  height: 150px;
+  height: 190px;
   margin: 30px auto;
   padding: 20px;
   display: grid;
