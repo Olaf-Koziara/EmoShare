@@ -70,11 +70,13 @@ class Chat extends Component {
     };
   }
   componentWillUnmount() {
-    firestore
-      .collection("users")
-      .doc(this.props.user.docId)
-      .update({ chatId: null });
-    this.setState({ chatId: null });
+    if (this.props.user.docId) {
+      firestore
+        .collection("users")
+        .doc(this.props.user.docId)
+        .update({ chatId: null });
+      this.setState({ chatId: null });
+    }
   }
   sendMessage = (e, chatId, uid) => {
     e.preventDefault();
