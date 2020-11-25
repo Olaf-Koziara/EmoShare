@@ -56,9 +56,6 @@ const RegisterForm = ({ setUser }) => {
               .doc(docRef.id)
               .update({ docId: docRef.id }),
           );
-      })
-      .then(() => {
-        window.location.href = "/";
       });
   };
 
