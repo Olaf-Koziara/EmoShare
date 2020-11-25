@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { selectChatAction } from "../../actions";
 
 import { firestore } from "../../firebaseConfig";
 import { StyledChatsWrapper } from "../../styledComponents";
@@ -17,12 +18,9 @@ class Chat extends Component {
         .collection("users")
         .doc(this.props.user.docId)
         .update({ chatId: this.state.chatId });
-      console.log("up");
     }
   }
   componentWillReceiveProps(nextProps) {
-    console.log("recive");
-
     this.ws.onopen = () => {
       console.log("connected");
     };
@@ -31,12 +29,17 @@ class Chat extends Component {
         .collection("users")
         .doc(nextProps.user.docId)
         .update({ chatId: this.state.chatId });
-      console.log("up");
+
       this.ws.onmessage = (evt) => {
         const message = JSON.parse(evt.data);
 
         if (message.message) {
-          console.log(message.message);
+          const chatIndex = this.props.chatUsers.findIndex(
+            (user) => user.chatId === message.uid,
+          );
+          if (!this.props.selectedChats.includes(chatIndex)) {
+            this.props.selectChat(chatIndex);
+          }
           this.addMessage({ name: message.name, message: message.message });
         }
       };
@@ -56,6 +59,7 @@ class Chat extends Component {
     this.ws = new WebSocket(wsUrl);
     console.log("mount");
     this.ws.onmessage = (evt) => {
+      console.log(evt.data);
       const message = JSON.parse(evt.data);
       console.log(message);
       this.setState({ chatId: message.uid });
@@ -81,7 +85,7 @@ class Chat extends Component {
     this.addMessage({
       name: message.name,
       message: message.message,
-      to: uid,
+      to: chatId,
     });
     e.target.reset();
   };
@@ -98,7 +102,7 @@ class Chat extends Component {
                   messages={this.state.messages.filter(
                     (message) =>
                       message.name === this.props.chatUsers[index].name ||
-                      message.to === this.props.chatUsers[index].uid,
+                      message.to === this.props.chatUsers[index].chatId,
                   )}
                   sendMessage={this.sendMessage}
                   chatIndex={index}
@@ -115,4 +119,7 @@ const mapStateToProps = (state) => ({
   selectedChats: state.selectedChats,
   chatUsers: state.chatUsers,
 });
-export default connect(mapStateToProps)(Chat);
+const mapDispatchToProps = (dispatch) => ({
+  selectChat: (index) => dispatch(selectChatAction(index)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);
