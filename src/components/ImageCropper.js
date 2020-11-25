@@ -49,7 +49,6 @@ const ImageCropper = ({
         croppedAreaPixels,
         rotation,
       );
-      console.log("donee", { croppedImage });
 
       let blob = await fetch(croppedImage).then((r) => r.blob());
 
