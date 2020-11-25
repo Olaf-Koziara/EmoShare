@@ -66,15 +66,15 @@ const Root = ({
           }
         });
 
-        Axios.get(
-          "https://emoji-api.com/categories/smileys-emotion?access_key=79a64a94f2e74f9f30b1c3b06ffbc6c6420c20c2",
-        ).then((response) => {
-          setEmojis(response.data);
-        });
-      } else {
-        setCurrentUser(null);
-      }
-    });
+    //     Axios.get(
+    //       "https://emoji-api.com/categories/smileys-emotion?access_key=79a64a94f2e74f9f30b1c3b06ffbc6c6420c20c2",
+    //     ).then((response) => {
+    //       setEmojis(response.data);
+    //     });
+    //   } else {
+    //     setCurrentUser(null);
+    //   }
+    // });
   }, []);
   useEffect(() => {
     if (currentUser) {
