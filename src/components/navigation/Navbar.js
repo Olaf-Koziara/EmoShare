@@ -24,17 +24,16 @@ import Search from "../search/Search";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ user, userImage }) => {
-  const logOut = ()=>{
+  const logOut = () => {
     firestore
-    .collection("users")
-    .doc(user.docId)
-    .update({ chatId: null }).then(()=>{
-       auth.signOut()
-    })
-}
-    
+      .collection("users")
+      .doc(user.docId)
+      .update({ chatId: null })
+      .then(() => {
+        auth.signOut();
+      });
+  };
 
-  }
   return (
     <StyledNavbarWrapper>
       <StyledNavStartWrapper>
@@ -59,7 +58,7 @@ const Navbar = ({ user, userImage }) => {
             />
           </StyledNavEndButton>
           <StyledNavLink to="/">
-            <button onClick={}>
+            <button onClick={logOut}>
               <StyledNavIcon src={logoutIcon} alt="logout" />
             </button>
           </StyledNavLink>
