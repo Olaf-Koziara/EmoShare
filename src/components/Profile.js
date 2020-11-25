@@ -24,7 +24,6 @@ const Profile = ({
   own,
 }) => {
   const follow = (uid) => {
-    console.log(uid);
     firestore
       .collection("users")
       .doc(userDocumentId)
