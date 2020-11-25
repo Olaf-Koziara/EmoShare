@@ -1,1 +1,1 @@
-export const wsUrl = "ws://localhost:5000";
+export const wsUrl = "ws://thawing-brook-23680.herokuapp.com/";
