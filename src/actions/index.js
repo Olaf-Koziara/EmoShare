@@ -36,3 +36,7 @@ export const closeChatAction = (index) => ({
   type: actionTypes.closeChat,
   payload: index,
 });
+export const setFriendsAction = (friends) => ({
+  type: actionTypes.setFriends,
+  payload: friends,
+});
