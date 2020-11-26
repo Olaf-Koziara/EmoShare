@@ -38,7 +38,7 @@ const Profile = ({
         <StyledProfileImage
           mxAuto
           src={user.profileImage ? user.profileImage : profilePhoto}
-          large
+          size={"large"}
         />
         <StyledProfileNameWrapper>
           {user.name} {user.surname}
