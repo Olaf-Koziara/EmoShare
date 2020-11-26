@@ -17,7 +17,7 @@ Accounts for test:
 
 ## General info
 
-App allows to share posts with image ,comment them and chat with friends.
+App allows to share posts, images ,comment them and chat with friends.
 
 ## Technologies
 
