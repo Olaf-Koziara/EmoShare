@@ -7,34 +7,17 @@ const Friends = ({ userFriends }) => {
   const [friends, setFriends] = useState([]);
   const [pagination, setPagination] = useState(1);
 
-  useEffect(() => {
-    if (userFriends) {
-      if (userFriends.length > 0) {
-        console.log(userFriends);
-        firestore
-          .collection("users")
-          .where("uid", "in", userFriends)
-
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) =>
-              setFriends([...friends, doc.data()]),
-            );
-          });
-      }
-    }
-  }, [userFriends]);
   return (
     <>
       {friends ? (
         <>
-          <FriendsList friends={friends} />
+          <FriendsList friends={userFriends} />
         </>
       ) : null}
     </>
   );
 };
 const mapStateToProps = (state) => ({
-  userFriends: state.user ? state.user.follows : null,
+  userFriends: state.friends,
 });
 export default connect(mapStateToProps)(Friends);
