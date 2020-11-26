@@ -36,11 +36,14 @@ class Chat extends Component {
 
       this.ws.onmessage = (evt) => {
         const message = JSON.parse(evt.data);
+        console.log("mes");
 
         if (message.message) {
           const chatIndex = this.props.chatUsers.findIndex(
-            (user) => user.chatId === message.uid,
+            (user) =>
+              user.name + user.surname === message.name + message.surname,
           );
+          console.log(chatIndex);
           if (!this.props.selectedChats.includes(chatIndex)) {
             this.props.selectChat(chatIndex);
           }
@@ -63,9 +66,8 @@ class Chat extends Component {
     this.ws = new WebSocket(wsUrl);
     console.log("mount");
     this.ws.onmessage = (evt) => {
-      console.log(evt.data);
       const message = JSON.parse(evt.data);
-      console.log(message);
+
       this.setState({ chatId: message.uid });
     };
   }
@@ -83,6 +85,7 @@ class Chat extends Component {
 
     const message = {
       name: this.props.user.name,
+      surname: this.props.user.surname,
       message: e.target.message.value,
       uid: chatId,
     };
