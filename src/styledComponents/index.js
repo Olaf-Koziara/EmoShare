@@ -247,10 +247,10 @@ export const StyledNavIcon = styled.img`
   }
 `;
 export const StyledProfileImage = styled.img`
-  width: ${({ medium, large }) =>
-    medium ? "100px" : large ? "200px" : "40px"};
-  min-height: ${({ medium, large }) =>
-    medium ? "100px" : large ? "200px" : "40px"};
+  width: ${({ size }) =>
+    size === "medium" ? "100px" : size === "large" ? "200px" : "40px"};
+  min-height: ${({ size }) =>
+    size === "medium" ? "100px" : size === "large" ? "200px" : "40px"};
 
   border: 1px solid rgba(100, 100, 100, 0.8);
 `;
