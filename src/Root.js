@@ -47,17 +47,7 @@ const Root = ({
               const tempUser = doc.data();
               setUser(tempUser);
 
-              if (tempUser.follows.length > 0) {
-                const friends = firestore
-                  .collection("users")
-                  .where("uid", "in", [...tempUser.follows]);
-
-                friends.onSnapshot((snapshot) => {
-                  const friends = snapshot.docs.map((friend) => friend.data());
-                  if (friends.length > 0) {
-                    setFriends(friends);
-                  }
-                });
+              if (tempUser.follows.length >= 0) {
                 const postsData = firestore
                   .collection("posts")
                   .where("userId", "in", [...tempUser.follows, tempUser.uid]);
@@ -71,6 +61,18 @@ const Root = ({
                     );
                   } else {
                     setPosts(null);
+                  }
+                });
+              }
+              if (tempUser.follows.length > 0) {
+                const friends = firestore
+                  .collection("users")
+                  .where("uid", "in", [...tempUser.follows]);
+
+                friends.onSnapshot((snapshot) => {
+                  const friends = snapshot.docs.map((friend) => friend.data());
+                  if (friends.length > 0) {
+                    setFriends(friends);
                   }
                 });
               }
