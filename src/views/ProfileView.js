@@ -9,8 +9,6 @@ const ProfileView = ({ location, actualUser }) => {
   const [userPosts, setUserPosts] = useState([]);
   const { uid } = location.state;
 
-  const postsData = firestore.collection("posts").where("uid", "==", uid);
-
   useEffect(() => {
     firestore
       .collection("users")
@@ -19,10 +17,15 @@ const ProfileView = ({ location, actualUser }) => {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => setUser(doc.data()));
       });
-    postsData.onSnapshot((snapshot) => {
-      const posts = snapshot.docs.map((post) => post.data());
-      setUserPosts(posts);
-    });
+    firestore
+      .collection("posts")
+      .where("userId", "==", uid)
+      .get()
+      .then((querySnapshot) =>
+        querySnapshot.docs.forEach((doc) => {
+          setUserPosts([...userPosts, doc.data()]);
+        }),
+      );
   }, []);
 
   return (
