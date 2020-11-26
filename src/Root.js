@@ -12,6 +12,7 @@ import {
   addImageUrlAction,
   setEmojisAction,
   setChatUsersAction,
+  setFriendsAction,
 } from "./actions";
 import Axios from "axios";
 
@@ -23,6 +24,7 @@ const Root = ({
   setEmojis,
   setChatUsers,
   userFollows,
+  setFriends,
 }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [tempUser, setTempUser] = useState();
@@ -45,7 +47,17 @@ const Root = ({
               const tempUser = doc.data();
               setUser(tempUser);
 
-              if (tempUser.follows.length >= 0) {
+              if (tempUser.follows.length > 0) {
+                const friends = firestore
+                  .collection("users")
+                  .where("uid", "in", [...tempUser.follows]);
+
+                friends.onSnapshot((snapshot) => {
+                  const friends = snapshot.docs.map((friend) => friend.data());
+                  if (friends.length > 0) {
+                    setFriends(friends);
+                  }
+                });
                 const postsData = firestore
                   .collection("posts")
                   .where("userId", "in", [...tempUser.follows, tempUser.uid]);
@@ -60,15 +72,6 @@ const Root = ({
                   } else {
                     setPosts(null);
                   }
-                });
-                const activeUsers = firestore
-                  .collection("users")
-                  .where("chatId", "!=", null);
-                activeUsers.onSnapshot((snapshot) => {
-                  const activeUsersArray = snapshot.docs
-                    .map((user) => user.data())
-                    .filter((user) => tempUser.follows.includes(user.uid));
-                  setChatUsers(activeUsersArray);
                 });
               }
             });
@@ -106,6 +109,7 @@ const mapDispatchToProps = (dispatch) => ({
   addImageUrl: (url) => dispatch(addImageUrlAction(url)),
   setEmojis: (emojis) => dispatch(setEmojisAction(emojis)),
   setChatUsers: (users) => dispatch(setChatUsersAction(users)),
+  setFriends: (friends) => dispatch(setFriendsAction(friends)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);
