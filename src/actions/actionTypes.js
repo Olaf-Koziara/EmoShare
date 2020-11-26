@@ -8,4 +8,5 @@ export const actionTypes = {
   setCHatUsers: "SET_CHAT_USERS",
   selectChat: "SELECT_CHAT",
   closeChat: "CLOSE_CHAT",
+  setFriends: "SET_FRIENDS",
 };
