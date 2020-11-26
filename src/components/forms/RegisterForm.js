@@ -55,7 +55,10 @@ const RegisterForm = ({ setUser }) => {
               .collection("users")
               .doc(docRef.id)
               .update({ docId: docRef.id }),
-          );
+          )
+          .then(() => {
+            window.location.href = "/";
+          });
       });
   };
 
