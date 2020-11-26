@@ -54,6 +54,7 @@ const Profile = ({
         ) : null}
       </StyledProfileImageWrapper>
       <StyledProfileTextWrapper>
+        {own ? "edit" : null}
         <StledProfileTextParagraph>
           Country:{user.country}{" "}
         </StledProfileTextParagraph>
