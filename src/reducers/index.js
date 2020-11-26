@@ -10,6 +10,7 @@ const initialState = {
   searchActiveUsers: [],
   chatUsers: [],
   selectedChats: [],
+  friends: [],
 };
 const emoShareReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -36,6 +37,13 @@ const emoShareReducer = (state = initialState, action) => {
       return {
         ...state,
         profileImagesUrl: [...state.profileImagesUrl, payload],
+      };
+    }
+    case actionTypes.setFriends: {
+      return {
+        ...state,
+        friends: payload,
+        chatUsers: payload.filter((user) => user.chatId !== null),
       };
     }
     case actionTypes.setActiveUsers: {
@@ -68,6 +76,7 @@ const emoShareReducer = (state = initialState, action) => {
         selectedChats: state.selectedChats.filter((index) => index !== payload),
       };
     }
+
     default:
       return state;
   }
