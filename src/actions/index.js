@@ -13,6 +13,10 @@ export const setPostsAction = (posts) => ({
   type: actionTypes.setPosts,
   payload: posts,
 });
+export const deletePostAction = (docId)=>({
+  type:actionTypes.deletePost,
+  payload:docId,
+})
 export const addImageUrlAction = (url) => ({
   type: actionTypes.addImageUrl,
   payload: url,

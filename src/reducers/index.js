@@ -76,6 +76,12 @@ const emoShareReducer = (state = initialState, action) => {
         selectedChats: state.selectedChats.filter((index) => index !== payload),
       };
     }
+    case actionTypes.deletePost:{
+      firestore.collection("posts").doc(payload).delete()
+      return{
+      ...state,
+      posts:state.posts.filter(post=> post.docId !== payload)
+    }}
 
     default:
       return state;
