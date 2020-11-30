@@ -117,7 +117,6 @@ export const StyledField = styled(Field)`
   width: 260px;
   margin-left: auto;
   margin-right: auto;
-
   transition: all 0.4s ease;
 `;
 export const StyledLoginFormWrapper = styled.div`
