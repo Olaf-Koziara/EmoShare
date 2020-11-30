@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   StyledAddCommentWrapper,
+  StyledCloseIcon,
+  StyledNavIcon,
   StyledPostImage,
   StyledPostInfoWrapper,
   StyledPostParagraph,
@@ -11,11 +13,14 @@ import ProfileImageLink from "../ProfileImageLink";
 import adddIcon from "../../assets/icons/001-plus.png";
 import { firestore } from "../../firebaseConfig";
 import CommentsList from "./CommentsList";
-
+import deleteIcon from "../../assets/icons/005-delete.png"
+import { useDispatch } from "react-redux";
+import { deletePostAction } from "../../actions";
 const PostListItem = ({ post, own, imageUrl, addComment }) => {
-  const { name, surname, userId, content, date, profileImage } = post;
+  const { name, surname, userId, content, date, profileImage,docId } = post;
   const [link, setLink] = useState();
   const [linkPreview, setLinkPreview] = useState();
+  const dispatch = useDispatch();
   const dateObject = new Date(date);
   useEffect(() => {
     checkIsLink();
@@ -33,7 +38,9 @@ const PostListItem = ({ post, own, imageUrl, addComment }) => {
       }
     }
   };
-
+  const deletePost = (docId)=>{
+    dispatch(deletePostAction(docId))
+  }
   return (
     <StyledPostWrapper>
       <StyledPostInfoWrapper>
@@ -55,6 +62,8 @@ const PostListItem = ({ post, own, imageUrl, addComment }) => {
             ${dateObject.getDate()}-${
               dateObject.getMonth() + 1
             }-${dateObject.getFullYear()}`}
+            {own?<button onClick={()=>deletePost(docId)}><StyledCloseIcon src={deleteIcon}/></button>:null}
+            
           </StyledPostParagraph>
         </div>
       </StyledPostInfoWrapper>
