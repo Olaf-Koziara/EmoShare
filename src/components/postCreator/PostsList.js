@@ -29,7 +29,7 @@ const PostsList = ({ posts, user, images }) => {
     return (
       <PostListItem
         key={post.content}
-        own={user.email === post.email}
+        own={user.uid === post.userId}
         post={post}
         addComment={addComment}
       />
