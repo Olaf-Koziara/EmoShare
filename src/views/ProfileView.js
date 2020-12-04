@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
+import Spinner from "../components/atoms/Spinner";
 import PostsList from "../components/postCreator/PostsList";
 import Profile from "../components/Profile.js";
 import { firestore } from "../firebaseConfig";
@@ -26,7 +27,7 @@ const ProfileView = ({ location, actualUser }) => {
           setUserPosts([...userPosts, doc.data()]);
         }),
       );
-  }, []);
+  }, [uid]);
 
   return (
     <>
@@ -35,7 +36,9 @@ const ProfileView = ({ location, actualUser }) => {
           <Profile own={actualUser.uid === uid} user={user} />{" "}
           <PostsList posts={userPosts} />
         </>
-      ) : null}{" "}
+      ) : (
+        <Spinner />
+      )}{" "}
     </>
   );
 };

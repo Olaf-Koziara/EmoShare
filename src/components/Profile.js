@@ -15,19 +15,37 @@ import Spinner from "./atoms/Spinner";
 import folowIcon from "../assets/icons/001-follower.png";
 import profilePhoto from "../assets/user.png";
 import friendIcon from "../assets/icons/007-friends.png";
+import { setUserAction } from "../actions";
 const Profile = ({
   user,
   followUser,
+  loggedUser,
   userDocumentId,
   userFollows,
   userImage,
   own,
+  userId,
+  setUser,
 }) => {
   const follow = (uid) => {
+    const tempUser = loggedUser;
+    tempUser.follows = [...tempUser.follows, uid];
+    setUser(tempUser);
     firestore
       .collection("users")
-      .doc(userDocumentId)
-      .update({ follows: [...userFollows, uid] });
+      .doc(loggedUser.docId)
+      .update({ follows: [...loggedUser.follows, uid] });
+    firestore
+      .collection("users")
+      .doc(user.docId)
+      .get()
+      .then((doc) => {
+        const follows = doc.data().follows;
+        firestore
+          .collection("users")
+          .doc(user.docId)
+          .update({ follows: [...follows, loggedUser.uid] });
+      });
   };
 
   const birthDate = new Date(user.birthDate);
@@ -70,8 +88,13 @@ const Profile = ({
   );
 };
 const mapStateToProps = (state) => ({
+  loggedUser: state.user,
   userDocumentId: state.user.docId,
+  userId: state.user.uid,
   userFollows: state.user.follows,
 });
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (user) => dispatch(setUserAction(user)),
+});
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
