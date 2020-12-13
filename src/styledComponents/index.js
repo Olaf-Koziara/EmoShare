@@ -1,7 +1,7 @@
 import { Field, Form } from "formik";
 import { Link, NavLink } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
-import LoginPageBack from "../assets/socialBack.jpg";
+import LoginPageBack from "../assets/faces.png";
 const spin = keyframes`
   0% {
    transform:rotate(0deg);
@@ -74,27 +74,20 @@ export const StyledProfileLink = styled(Link)`
 //Login page
 export const StyledLoginPageWrapper = styled.div`
   background-position: auto;
-  height: 1000px;
+ 
 
   border-radius: 20px;
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(${LoginPageBack});
-    filter: blur(10px);
-    z-index: -100;
-  }
+
 `;
 export const StyledLoginPageLogoWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -100;
+ margin-left:auto;
+ margin-right:auto;
+ width:500px;
 `;
+export const StyledLogo = styled.img`
+width:500px;
+margin:auto;
+`
 //Login form
 export const StyledForm = styled(Form)`
   width: 100%;
@@ -121,7 +114,7 @@ export const StyledField = styled(Field)`
 `;
 export const StyledLoginFormWrapper = styled.div`
   width: 300px;
-  margin: 500px 0px;
+
 
   ${({ mxAuto }) =>
     mxAuto &&

@@ -1,7 +1,7 @@
 import React from "react";
 import LoginForm from "../components/forms/LoginForm";
-import { StyledLoginPageWrapper,StyledBackgroundImage, StyledLoginPageLogoWrapper } from "../styledComponents";
-import loginLogo from "../assets/loginLogo.png";
+import { StyledLoginPageWrapper,StyledBackgroundImage, StyledLoginPageLogoWrapper, StyledLogo } from "../styledComponents";
+import loginLogo from "../assets/faces.png";
 import { Link, Route, Switch } from "react-router-dom";
 import RegisterForm from "../components/forms/RegisterForm.js";
 import { Button } from "../components/atoms/Button";
@@ -10,9 +10,10 @@ const UnloggedUser = () => {
     <>
    
       <StyledLoginPageWrapper>
-        <StyledLoginPageLogoWrapper>
-          <img src={loginLogo} alt="logo"/>
-        </StyledLoginPageLogoWrapper>
+          <StyledLoginPageLogoWrapper>
+          <StyledLogo src={loginLogo} alt="logo"/>
+          </StyledLoginPageLogoWrapper>
+       
         <Switch>
           <Route exact path="/">
         <LoginForm />
